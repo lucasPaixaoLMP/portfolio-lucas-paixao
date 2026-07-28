@@ -11,52 +11,66 @@ type Project = {
   tags: string[];
   liveUrl: string;
   githubUrl: string;
-  visual: "commerce" | "finance" | "wellness";
+  image: string;
+  imagePosition?: string;
 };
 
 /*
  * PERSONALIZE SEUS PROJETOS AQUI:
- * 1. Troque liveUrl pelo link publicado do projeto.
- * 2. Troque githubUrl pelo link do repositório.
- * 3. Edite título, descrição e tecnologias.
- * Os botões e todo o card já usam automaticamente esses links.
+ * Os links publicados, repositórios e previews reais ficam centralizados aqui.
+ * Para adicionar outro projeto, duplique um item e coloque a captura em
+ * /public/projects. Os botões e o card usam estes dados automaticamente.
  */
 const projects: Project[] = [
   {
     number: "01",
-    title: "Nōva Commerce",
-    category: "E-commerce experience",
+    title: "DDA Delivery",
+    category: "Delivery & e-commerce",
     year: "2026",
     description:
-      "Uma experiência de compra refinada, criada para transformar descoberta em desejo — e desejo em conversão.",
-    tags: ["Next.js", "TypeScript", "Stripe"],
-    liveUrl: "https://example.com", // COLOQUE AQUI O LINK DO PROJETO
-    githubUrl: "https://github.com/", // COLOQUE AQUI O LINK DO GITHUB
-    visual: "commerce",
+      "Aplicação de delivery responsiva com catálogo por categorias, busca de produtos e uma jornada de compra pensada para dispositivos móveis.",
+    tags: ["JavaScript", "Firebase", "Responsive UI"],
+    liveUrl: "https://dda-delivery.web.app/",
+    githubUrl: "https://github.com/lucasPaixaoLMP/app-delivery",
+    image: "/projects/dda-delivery.png",
+    imagePosition: "center top",
   },
   {
     number: "02",
-    title: "Orbit Finance",
-    category: "Fintech dashboard",
-    year: "2025",
+    title: "StockFlow",
+    category: "Gestão de estoque & vendas",
+    year: "2026",
     description:
-      "Dados financeiros complexos traduzidos em uma interface objetiva, rápida e surpreendentemente simples.",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    liveUrl: "https://example.com", // COLOQUE AQUI O LINK DO PROJETO
-    githubUrl: "https://github.com/", // COLOQUE AQUI O LINK DO GITHUB
-    visual: "finance",
+      "Plataforma full stack multi-loja para controle de inventário e vendas, com isolamento por vendedor, histórico e operação em nuvem.",
+    tags: ["Angular 17", "Node.js", "Turso"],
+    liveUrl: "https://stockflow-lukkl.vercel.app/login?returnUrl=%2Fdashboard",
+    githubUrl: "https://github.com/lucasPaixaoLMP/Stockflow",
+    image: "/projects/stockflow.png",
   },
   {
     number: "03",
-    title: "Alma Studio",
-    category: "Wellness platform",
-    year: "2025",
+    title: "Monte seu PC",
+    category: "Jogo educacional interativo",
+    year: "2026",
     description:
-      "Uma plataforma digital serena que conecta movimento, rotina e bem-estar em uma jornada acolhedora.",
-    tags: ["Next.js", "Framer Motion", "CMS"],
-    liveUrl: "https://example.com", // COLOQUE AQUI O LINK DO PROJETO
-    githubUrl: "https://github.com/", // COLOQUE AQUI O LINK DO GITHUB
-    visual: "wellness",
+      "Experiência gamificada de hardware em que o usuário monta um computador arrastando cada componente para o lugar correto.",
+    tags: ["JavaScript", "HTML5", "CSS3"],
+    liveUrl: "https://jogo-hardware.vercel.app/",
+    githubUrl: "https://github.com/lucasPaixaoLMP/jogo-hardware",
+    image: "/projects/jogo-hardware.png",
+    imagePosition: "center top",
+  },
+  {
+    number: "04",
+    title: "Barber App",
+    category: "Agendamento via WhatsApp",
+    year: "2026",
+    description:
+      "Aplicação para barbearias com entrada simplificada por telefone e uma experiência elegante para conectar clientes ao atendimento.",
+    tags: ["Node.js", "Express", "WhatsApp"],
+    liveUrl: "https://barber-wa-server.vercel.app/",
+    githubUrl: "https://github.com/lucasPaixaoLMP/barber-wa-server",
+    image: "/projects/barber-wa.png",
   },
 ];
 
@@ -76,99 +90,6 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
     <span className="arrow" aria-hidden="true">
       {diagonal ? "↗" : "→"}
     </span>
-  );
-}
-
-function ProjectPreview({ type }: { type: Project["visual"] }) {
-  if (type === "commerce") {
-    return (
-      <div className="preview preview-commerce">
-        <div className="browser-bar">
-          <span /><span /><span />
-          <div className="browser-address">novā.store / collection</div>
-        </div>
-        <div className="commerce-nav">
-          <b>NŌVA</b><span>NEW &nbsp; SHOP &nbsp; STORIES</span><i>Bag (2)</i>
-        </div>
-        <div className="commerce-body">
-          <div className="commerce-copy">
-            <small>THE NEW COLLECTION</small>
-            <strong>Objects for<br />slow living.</strong>
-            <button>Explore collection ↗</button>
-          </div>
-          <div className="product-stage">
-            <div className="vase vase-back" />
-            <div className="vase vase-front" />
-            <span>Form No. 04</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (type === "finance") {
-    return (
-      <div className="preview preview-finance">
-        <div className="browser-bar dark-bar">
-          <span /><span /><span />
-          <div className="browser-address">app.orbit.finance</div>
-        </div>
-        <div className="finance-shell">
-          <aside>
-            <b>O.</b>
-            <div className="side-lines"><i /><i /><i /><i /></div>
-            <span>LP</span>
-          </aside>
-          <main>
-            <div className="finance-head">
-              <div><small>GOOD MORNING, LUCAS</small><h4>Your overview</h4></div>
-              <button>+ Add account</button>
-            </div>
-            <div className="balance-grid">
-              <div className="balance-card">
-                <small>TOTAL BALANCE</small>
-                <strong>R$ 48.250,80</strong>
-                <span>↑ 12.8% this month</span>
-                <div className="chart">
-                  {[22, 30, 27, 43, 38, 58, 51, 74, 68, 87, 80, 96].map((h, i) => (
-                    <i key={i} style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-              </div>
-              <div className="goal-card">
-                <small>MONTHLY GOAL</small>
-                <div className="goal-ring"><b>72%</b></div>
-                <span>R$ 7.200 de R$ 10k</span>
-              </div>
-            </div>
-          </main>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="preview preview-wellness">
-      <div className="browser-bar warm-bar">
-        <span /><span /><span />
-        <div className="browser-address">almastudio.co / practice</div>
-      </div>
-      <div className="wellness-nav">
-        <b>alma.</b><span>Practices &nbsp; Journal &nbsp; About</span><button>Join us</button>
-      </div>
-      <div className="wellness-body">
-        <div className="sun-orbit"><i /><span>03</span></div>
-        <div className="wellness-copy">
-          <small>MOVE WITH INTENTION</small>
-          <strong>A quieter<br />way to feel.</strong>
-          <p>Guided movement and rituals<br />for your everyday rhythm.</p>
-        </div>
-        <div className="wellness-card">
-          <div className="wellness-silhouette" />
-          <span>Morning flow · 24 min</span>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -204,7 +125,13 @@ function ProjectCard({ project }: { project: Project }) {
         rel="noreferrer"
         aria-label={`Abrir ${project.title}`}
       >
-        <ProjectPreview type={project.visual} />
+        <img
+          className="project-screenshot"
+          src={project.image}
+          alt={`Preview do projeto ${project.title}`}
+          style={{ objectPosition: project.imagePosition ?? "center center" }}
+          loading="lazy"
+        />
         <span className="open-project"><Arrow diagonal /></span>
       </a>
 
