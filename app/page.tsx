@@ -192,6 +192,15 @@ export default function Home() {
           <span><b>LUCAS MATHIAS PAIXÃO</b> — DESENVOLVEDOR FULL STACK</span>
           <span>BRASIL · 2026</span>
         </div>
+        <div className="hero-name-lockup reveal" aria-label="Lucas Mathias Paixão">
+          <span className="hero-name-monogram">LMP.</span>
+          <div className="hero-name-lines">
+            <strong>LUCAS</strong>
+            <strong>MATHIAS</strong>
+            <strong>PAIXÃO</strong>
+          </div>
+          <small>DESENVOLVEDOR FULL STACK</small>
+        </div>
         <h1 className="reveal">
           Eu crio experiências
           <span>digitais que <em>movem.</em></span>
