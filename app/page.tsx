@@ -249,8 +249,7 @@ export default function Home() {
               Acredito em interfaces silenciosas, performance real e movimentos
               que ajudam a contar uma história. Menos ruído, mais significado.
             </p>
-            {/* TROQUE O LINK ABAIXO PELO LINK DO SEU CURRÍCULO */}
-            <a href="/curriculo.pdf" target="_blank">
+            <a href="/curriculo.pdf" target="_blank" rel="noreferrer">
               Baixar currículo <Arrow diagonal />
             </a>
           </div>
@@ -282,10 +281,9 @@ export default function Home() {
             <span>SÃO PAULO, BR</span>
           </div>
           <div className="social-links">
-            {/* TROQUE OS LINKS ABAIXO PELOS SEUS PERFIS */}
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href="https://linkedin.com/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            <a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a>
+            <a href="https://github.com/lucasPaixaoLMP" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/lucas-mathias-paix%C3%A3o-84a62b198/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="/curriculo.pdf" target="_blank" rel="noreferrer">Currículo ↗</a>
           </div>
           <a href="#top">Voltar ao topo ↑</a>
         </footer>
