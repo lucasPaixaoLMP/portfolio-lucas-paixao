@@ -18,9 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
   const protocol = requestHeaders.get("x-forwarded-proto") ?? "https";
   const baseUrl = host ? `${protocol}://${host}` : "http://localhost:3000";
-  const title = "Lucas Paixão — Desenvolvedor Full Stack";
+  const title = "Lucas Mathias Paixão — Desenvolvedor Full Stack";
   const description =
-    "Portfólio de Lucas Paixão, desenvolvedor full stack especializado em experiências digitais elegantes, rápidas e memoráveis.";
+    "Portfólio de Lucas Mathias Paixão, desenvolvedor full stack especializado em experiências digitais elegantes, rápidas e memoráveis.";
 
   return {
     metadataBase: new URL(baseUrl),

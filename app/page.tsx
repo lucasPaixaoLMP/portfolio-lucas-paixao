@@ -249,7 +249,7 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="logo" href="#top" aria-label="Ir ao início">LP<span>.</span></a>
+        <a className="logo" href="#top" aria-label="Ir ao início">LMP<span>.</span></a>
         <nav aria-label="Navegação principal">
           <a href="#projetos">Projetos</a>
           <a href="#sobre">Sobre</a>
@@ -262,7 +262,7 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-kicker reveal">
-          <span>DESENVOLVEDOR FULL STACK</span>
+          <span><b>LUCAS MATHIAS PAIXÃO</b> — DESENVOLVEDOR FULL STACK</span>
           <span>BRASIL · 2026</span>
         </div>
         <h1 className="reveal">
@@ -274,6 +274,12 @@ export default function Home() {
             Design com intenção. Código com precisão.<br />
             Produtos digitais feitos para permanecer.
           </p>
+          <div className="name-stamp" aria-label="Lucas Mathias Paixão">
+            <span>LUCAS</span>
+            <b>MATHIAS</b>
+            <strong>PAIXÃO</strong>
+            <i>FULL STACK · DEV</i>
+          </div>
           <a className="circle-link" href="#projetos" aria-label="Ver projetos">
             <span>ver<br />projetos</span>
             <Arrow />
@@ -295,10 +301,24 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="identity-break" aria-label="Assinatura Lucas Mathias Paixão">
+        <div className="identity-line reveal">
+          <span>LUCAS</span>
+          <i>✦</i>
+          <b>MATHIAS</b>
+          <strong>PAIXÃO</strong>
+        </div>
+        <div className="identity-caption reveal">
+          <span>DESIGN COM INTENÇÃO</span>
+          <span>© 2026</span>
+          <span>CÓDIGO COM PRECISÃO</span>
+        </div>
+      </section>
+
       <section className="about" id="sobre">
         <div className="about-index reveal">
           <span className="eyebrow">02 — SOBRE MIM</span>
-          <span>( UM POUCO DE CONTEXTO )</span>
+          <span>( LUCAS / MATHIAS / PAIXÃO )</span>
         </div>
         <div className="about-grid">
           <div className="about-statement reveal">
@@ -343,10 +363,14 @@ export default function Home() {
           <a href="mailto:seuemail@exemplo.com">
             extraordinário<span>.</span>
           </a>
+          <div className="contact-signature">
+            <span>por</span>
+            <strong>Lucas Mathias Paixão</strong>
+          </div>
         </div>
         <footer>
           <div>
-            <span>© 2026 LUCAS PAIXÃO</span>
+            <span>© 2026 LUCAS MATHIAS PAIXÃO</span>
             <span>SÃO PAULO, BR</span>
           </div>
           <div className="social-links">
