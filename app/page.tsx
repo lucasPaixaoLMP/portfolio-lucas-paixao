@@ -201,10 +201,6 @@ export default function Home() {
           </div>
           <small>DESENVOLVEDOR FULL STACK</small>
         </div>
-        <h1 className="reveal">
-          Eu crio experiências
-          <span>digitais que <em>movem.</em></span>
-        </h1>
         <div className="hero-bottom reveal">
           <p>
             Design com intenção. Código com precisão.<br />
