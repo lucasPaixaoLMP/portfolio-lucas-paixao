@@ -201,12 +201,6 @@ export default function Home() {
             Design com intenção. Código com precisão.<br />
             Produtos digitais feitos para permanecer.
           </p>
-          <div className="name-stamp" aria-label="Lucas Mathias Paixão">
-            <span>LUCAS</span>
-            <b>MATHIAS</b>
-            <strong>PAIXÃO</strong>
-            <i>FULL STACK · DEV</i>
-          </div>
           <a className="circle-link" href="#projetos" aria-label="Ver projetos">
             <span>ver<br />projetos</span>
             <Arrow />
@@ -225,20 +219,6 @@ export default function Home() {
         </div>
         <div className="projects-list">
           {projects.map((project) => <ProjectCard key={project.number} project={project} />)}
-        </div>
-      </section>
-
-      <section className="identity-break" aria-label="Assinatura Lucas Mathias Paixão">
-        <div className="identity-line reveal">
-          <span>LUCAS</span>
-          <i>✦</i>
-          <b>MATHIAS</b>
-          <strong>PAIXÃO</strong>
-        </div>
-        <div className="identity-caption reveal">
-          <span>DESIGN COM INTENÇÃO</span>
-          <span>© 2026</span>
-          <span>CÓDIGO COM PRECISÃO</span>
         </div>
       </section>
 
@@ -290,10 +270,6 @@ export default function Home() {
           <a href="mailto:seuemail@exemplo.com">
             extraordinário<span>.</span>
           </a>
-          <div className="contact-signature">
-            <span>por</span>
-            <strong>Lucas Mathias Paixão</strong>
-          </div>
         </div>
         <footer>
           <div>
