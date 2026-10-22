@@ -1,11 +1,6 @@
-import assert from "node:assert/strict";
-import { access, readFile, readdir } from "node:fs/promises";
-import test from "node:test";
-
-const developmentPreviewMeta =
-  /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
-const templateRoot = new URL("../", import.meta.url);
-const previewRoot = new URL("../app/_sites-preview/", import.meta.url);
+import assert from 'node:assert/strict';
+import { access } from 'node:fs/promises';
+import test from 'node:test';
 
 async function render() {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -28,64 +23,38 @@ async function render() {
   );
 }
 
-test("server-renders the starter loading skeleton", async () => {
+test("renders the portfolio, theme toggle, experience and accessible section navigation", async () => {
   const response = await render();
   assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-
   const html = await response.text();
-  assert.match(html, developmentPreviewMeta);
-  assert.match(html, /<title>Your site is taking shape<\/title>/i);
-  assert.match(html, /Building your site/);
-  assert.match(html, /Your site is taking shape/);
-  assert.match(
-    html,
-    /Your first version will appear here automatically when it’s ready\./,
-  );
-  assert.doesNotMatch(html, /Codex/);
-  assert.match(html, /react-loading-skeleton/);
-  assert.match(html, /role="status"/);
+  assert.match(html, /<html[^>]*lang="pt-BR"/);
+  assert.match(html, /<title>Lucas Mathias Paixão/);
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  for (const section of ["projetos", "experiencia", "sobre", "contato"]) {
+    assert.ok(html.includes(`id="${section}"`), `Missing section id: ${section}`);
+    assert.ok(html.includes(`href="#${section}"`), `Missing nav link: #${section}`);
+  }
+  assert.ok(html.includes("Pular para projetos"));
+  assert.ok(html.includes("AI Engineer"));
+  assert.ok(html.includes("MVP Builders"));
+  assert.ok(html.includes("/lucas-paixao.png"));
+  assert.ok(html.includes("/curriculo.pdf"));
+  assert.ok(html.includes("https://www.linkedin.com/in/"));
+  assert.ok(!html.includes("seuemail@exemplo.com"));
 });
 
-test("keeps the loading skeleton scoped and disposable", async () => {
-  const [preview, css, page, layout, packageJson, files] = await Promise.all([
-    readFile(new URL("SkeletonPreview.tsx", previewRoot), "utf8"),
-    readFile(new URL("preview.css", previewRoot), "utf8"),
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readdir(previewRoot),
-  ]);
-
-  assert.deepEqual(files.sort(), ["SkeletonPreview.tsx", "preview.css"]);
-  assert.match(preview, /from "react-loading-skeleton"/);
-  assert.match(preview, /baseColor="#eceae7"/);
-  assert.match(preview, /highlightColor="#f9f8f6"/);
-  assert.match(preview, /duration=\{2\.8\}/);
-  assert.match(preview, /sites-skeleton-search-placeholder/);
-  assert.match(packageJson, /"react-loading-skeleton": "3\.5\.0"/);
-
-  const shellIndex = preview.indexOf('className="sites-skeleton-shell"');
-  const statusIndex = preview.indexOf('className="sites-skeleton-status"');
-  assert.ok(shellIndex >= 0 && statusIndex > shellIndex);
-  assert.match(css, /position:\s*fixed/);
-  assert.match(css, /inset:\s*0/);
-  assert.match(css, /opacity:\s*0\.52/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.doesNotMatch(css, /#020617|canvas|pets|progress/i);
-  assert.doesNotMatch(
-    preview,
-    /loading-spinner|status-mark|status-progress|canvas|cookie|random/i,
-  );
-
-  assert.match(page, /export const metadata:\s*Metadata/);
-  assert.match(page, /"codex-preview": "development"/);
-  assert.match(page, /<SkeletonPreview \/>/);
-  assert.match(layout, /title:\s*"Starter Project"/);
-  assert.doesNotMatch(layout, /codex-preview|_sites-preview|themeColor|\bViewport\b/);
-  assert.doesNotMatch(css, /(^|\s)(html|body)\s*\{/m);
-
-  await assert.rejects(
-    access(new URL("public/_sites-preview", templateRoot)),
-  );
+test("renders six real projects with available local previews and portrait asset", async () => {
+  const html = await (await render()).text();
+  assert.equal((html.match(/<article\b/g) ?? []).length, 6);
+  const orderedTitles = ["ClockHub", "MinasXtreme", "DDA Delivery", "StockFlow", "Monte seu PC", "Barber App"];
+  let lastIndex = -1;
+  for (const title of orderedTitles) {
+    const idx = html.indexOf(`Abrir ${title}`);
+    assert.ok(idx > lastIndex, `Expected ${title} in order`);
+    lastIndex = idx;
+  }
+  assert.ok(html.includes('/projects/clockhub-shot.png'));
+  const images = [...html.matchAll(/<img\b[^>]*src="([^"]+)"/g)];
+  assert.equal(images.length, 7);
+  for (const [, src] of images) await access(new URL(`../public${src}`, import.meta.url));
 });
