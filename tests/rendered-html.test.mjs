@@ -43,12 +43,14 @@ test("renders the portfolio, theme toggle, experience and accessible section nav
   assert.ok(!html.includes("seuemail@exemplo.com"));
 });
 
-test("renders seven real projects with available local previews and portrait asset", async () => {
+test("renders nine real projects with available local previews and portrait asset", async () => {
   const html = await (await render()).text();
-  assert.equal((html.match(/<article\b/g) ?? []).length, 7);
+  assert.equal((html.match(/<article\b/g) ?? []).length, 9);
   const orderedTitles = [
     "ClockHub",
     "MinasXtreme",
+    "PRÓ Torneios",
+    "BuyTicket Brasil",
     "PAN — Apoio ao Neurodivergente",
     "DDA Delivery",
     "StockFlow",
@@ -62,8 +64,10 @@ test("renders seven real projects with available local previews and portrait ass
     lastIndex = idx;
   }
   assert.ok(html.includes('/projects/clockhub-shot.png'));
+  assert.ok(html.includes('/projects/protorneios-shot.png'));
+  assert.ok(html.includes('/projects/buyticket-shot.png'));
   assert.ok(html.includes('/projects/pan-mobile.png'));
   const images = [...html.matchAll(/<img\b[^>]*src="([^"]+)"/g)];
-  assert.equal(images.length, 8);
+  assert.equal(images.length, 10);
   for (const [, src] of images) await access(new URL(`../public${src}`, import.meta.url));
 });

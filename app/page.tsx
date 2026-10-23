@@ -60,6 +60,31 @@ const projects: Project[] = [
   },
   {
     number: "03",
+    title: "PRÓ Torneios",
+    category: "Plataforma de torneios esportivos",
+    year: "2026",
+    description:
+      "Plataforma completa para organização de torneios de beach tennis, tênis, futevôlei e padel, com inscrições via PIX, chaves automáticas, placar ao vivo e perfil de atletas.",
+    tags: ["Full Stack", "PIX & Pagamentos", "Placar ao Vivo", "SaaS Esportivo"],
+    liveUrl: "https://protorneios.com.br/",
+    image: "/projects/protorneios-shot.png",
+    imagePosition: "center top",
+  },
+  {
+    number: "04",
+    title: "BuyTicket Brasil",
+    category: "Marketplace de ingressos · Migração",
+    year: "2026",
+    description:
+      "Colaboração na migração tecnológica do maior mercado secundário de ingressos do Brasil, garantindo alta disponibilidade, busca rápida e compra e revenda seguras para grandes eventos.",
+    tags: ["Migração de Sistema", "Marketplace", "Alta Performance", "Eventos"],
+    liveUrl: "https://buyticketbrasil.com/",
+    statusLabel: "Colaboração na migração",
+    image: "/projects/buyticket-shot.png",
+    imagePosition: "center top",
+  },
+  {
+    number: "05",
     title: "PAN — Apoio ao Neurodivergente",
     category: "App mobile & saúde multidisciplinar",
     year: "2026",
@@ -72,7 +97,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "04",
+    number: "06",
     title: "DDA Delivery",
     category: "Delivery & e-commerce",
     year: "2026",
@@ -85,7 +110,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "05",
+    number: "07",
     title: "StockFlow",
     category: "Gestão de estoque & vendas",
     year: "2026",
@@ -97,7 +122,7 @@ const projects: Project[] = [
     image: "/projects/stockflow.png",
   },
   {
-    number: "06",
+    number: "08",
     title: "Monte seu PC",
     category: "Jogo educacional interativo",
     year: "2026",
@@ -110,7 +135,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "07",
+    number: "09",
     title: "Barber App",
     category: "Agendamento via WhatsApp",
     year: "2026",
@@ -324,7 +349,7 @@ export default function Home() {
         </a>
         <nav aria-label="Navegação principal">
           <a href="#projetos">
-            Projetos <sup>07</sup>
+            Projetos <sup>09</sup>
           </a>
           <a href="#experiencia">Experiência</a>
           <a href="#sobre">Sobre</a>
@@ -454,7 +479,7 @@ export default function Home() {
               Produtos reais, desafios diferentes.
               <br />O mesmo cuidado em cada detalhe.
             </p>
-            <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (07)</span>
+            <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (09)</span>
           </div>
         </div>
         <div className="projects-list">
