@@ -9,8 +9,10 @@ type Project = {
   year: string;
   description: string;
   tags: string[];
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl?: string;
+  statusLabel?: string;
+  previewHost?: string;
   image: string;
   imagePosition?: string;
 };
@@ -58,6 +60,19 @@ const projects: Project[] = [
   },
   {
     number: "03",
+    title: "PAN — Apoio ao Neurodivergente",
+    category: "App mobile & saúde multidisciplinar",
+    year: "2026",
+    description:
+      "Aplicativo mobile para acompanhamento multidisciplinar de pessoas neurodivergentes, integrando prontuário, calendário de comportamentos, aderência medicamentosa e rede de cuidado entre família, escola e clínica.",
+    tags: ["Flutter", "Riverpod", "FastAPI", "Clean Architecture", "LGPD"],
+    statusLabel: "Em desenvolvimento",
+    previewHost: "app mobile · flutter (em desenvolvimento)",
+    image: "/projects/pan-mobile.png",
+    imagePosition: "center top",
+  },
+  {
+    number: "04",
     title: "DDA Delivery",
     category: "Delivery & e-commerce",
     year: "2026",
@@ -70,7 +85,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "04",
+    number: "05",
     title: "StockFlow",
     category: "Gestão de estoque & vendas",
     year: "2026",
@@ -82,7 +97,7 @@ const projects: Project[] = [
     image: "/projects/stockflow.png",
   },
   {
-    number: "05",
+    number: "06",
     title: "Monte seu PC",
     category: "Jogo educacional interativo",
     year: "2026",
@@ -95,7 +110,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "06",
+    number: "07",
     title: "Barber App",
     category: "Agendamento via WhatsApp",
     year: "2026",
@@ -160,45 +175,75 @@ function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const hostLabel =
+    project.previewHost ??
+    (project.liveUrl ? new URL(project.liveUrl).hostname : "preview");
+
+  const visualContent = (
+    <>
+      <div className="project-browser" aria-hidden="true">
+        <span>● ● ●</span>
+        <span>{hostLabel}</span>
+        <span>{project.liveUrl ? "↗" : "●"}</span>
+      </div>
+      <img
+        src={project.image}
+        alt={`Preview do projeto ${project.title}`}
+        style={{ objectPosition: project.imagePosition ?? "center" }}
+        loading="lazy"
+        width="1200"
+        height="750"
+      />
+      {project.liveUrl && (
+        <span className="open-project">
+          <Arrow />
+        </span>
+      )}
+    </>
+  );
+
   return (
     <article
       className="project reveal spotlight-card"
       onPointerMove={handleSpotlightMove}
     >
-      <a
-        className="project-visual"
-        href={project.liveUrl}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Abrir ${project.title}`}
-      >
-        <div className="project-browser" aria-hidden="true">
-          <span>● ● ●</span>
-          <span>{new URL(project.liveUrl).hostname}</span>
-          <span>↗</span>
+      {project.liveUrl ? (
+        <a
+          className="project-visual"
+          href={project.liveUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Abrir ${project.title}`}
+        >
+          {visualContent}
+        </a>
+      ) : (
+        <div
+          className="project-visual project-visual-static"
+          aria-label={`Preview de ${project.title}`}
+        >
+          {visualContent}
         </div>
-        <img
-          src={project.image}
-          alt={`Preview do projeto ${project.title}`}
-          style={{ objectPosition: project.imagePosition ?? "center" }}
-          loading="lazy"
-          width="1200"
-          height="750"
-        />
-        <span className="open-project">
-          <Arrow />
-        </span>
-      </a>
+      )}
       <div className="project-body">
         <div className="project-caption">
           <span className="eyebrow">{project.category}</span>
           <span className="project-number">/{project.number}</span>
         </div>
         <h3>
-          <a href={project.liveUrl} target="_blank" rel="noreferrer">
-            {project.title}
-            <Arrow />
-          </a>
+          {project.liveUrl ? (
+            <a href={project.liveUrl} target="_blank" rel="noreferrer">
+              {project.title}
+              <Arrow />
+            </a>
+          ) : (
+            <span className="project-title-static">
+              <span>{project.title}</span>
+              {project.statusLabel && (
+                <span className="project-status-pill">{project.statusLabel}</span>
+              )}
+            </span>
+          )}
         </h3>
         <p>{project.description}</p>
         <div className="project-meta">
@@ -207,7 +252,7 @@ function ProjectCard({ project }: { project: Project }) {
               <span key={tag}>{tag}</span>
             ))}
           </div>
-          {project.githubUrl && (
+          {project.githubUrl ? (
             <a
               className="code-link"
               href={project.githubUrl}
@@ -217,6 +262,10 @@ function ProjectCard({ project }: { project: Project }) {
             >
               Código <Arrow />
             </a>
+          ) : (
+            project.statusLabel && (
+              <span className="code-link status-note">{project.statusLabel}</span>
+            )
           )}
         </div>
       </div>
@@ -275,7 +324,7 @@ export default function Home() {
         </a>
         <nav aria-label="Navegação principal">
           <a href="#projetos">
-            Projetos <sup>06</sup>
+            Projetos <sup>07</sup>
           </a>
           <a href="#experiencia">Experiência</a>
           <a href="#sobre">Sobre</a>
@@ -405,7 +454,7 @@ export default function Home() {
               Produtos reais, desafios diferentes.
               <br />O mesmo cuidado em cada detalhe.
             </p>
-            <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (06)</span>
+            <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (07)</span>
           </div>
         </div>
         <div className="projects-list">
