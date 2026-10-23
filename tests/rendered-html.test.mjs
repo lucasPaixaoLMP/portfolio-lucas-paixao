@@ -48,10 +48,10 @@ test("renders nine real projects with available local previews and portrait asse
   assert.equal((html.match(/<article\b/g) ?? []).length, 9);
   const orderedTitles = [
     "ClockHub",
-    "MinasXtreme",
-    "PRÓ Torneios",
     "BuyTicket Brasil",
     "PAN — Apoio ao Neurodivergente",
+    "PRÓ Torneios",
+    "MinasXtreme",
     "DDA Delivery",
     "StockFlow",
     "Monte seu PC",

@@ -48,30 +48,6 @@ const projects: Project[] = [
   },
   {
     number: "02",
-    title: "MinasXtreme",
-    category: "Gestão de campeonatos de motocross",
-    year: "2026",
-    description:
-      "Plataforma para inscrições, pagamentos, vistoria e acompanhamento de resultados em campeonatos de motocross, desenvolvida para um cliente real.",
-    tags: ["Next.js", "Pagamentos", "Gestão esportiva"],
-    liveUrl: "https://minasxtreme.com.br/",
-    image: "/projects/minasxtreme-shot.png",
-    imagePosition: "center center",
-  },
-  {
-    number: "03",
-    title: "PRÓ Torneios",
-    category: "Plataforma de torneios esportivos",
-    year: "2026",
-    description:
-      "Plataforma completa para organização de torneios de beach tennis, tênis, futevôlei e padel, com inscrições via PIX, chaves automáticas, placar ao vivo e perfil de atletas.",
-    tags: ["Full Stack", "PIX & Pagamentos", "Placar ao Vivo", "SaaS Esportivo"],
-    liveUrl: "https://protorneios.com.br/",
-    image: "/projects/protorneios-shot.png",
-    imagePosition: "center top",
-  },
-  {
-    number: "04",
     title: "BuyTicket Brasil",
     category: "Marketplace de ingressos · Migração",
     year: "2026",
@@ -84,7 +60,7 @@ const projects: Project[] = [
     imagePosition: "center top",
   },
   {
-    number: "05",
+    number: "03",
     title: "PAN — Apoio ao Neurodivergente",
     category: "App mobile & saúde multidisciplinar",
     year: "2026",
@@ -95,6 +71,30 @@ const projects: Project[] = [
     previewHost: "app mobile · flutter (em desenvolvimento)",
     image: "/projects/pan-mobile.png",
     imagePosition: "center top",
+  },
+  {
+    number: "04",
+    title: "PRÓ Torneios",
+    category: "Plataforma de torneios esportivos",
+    year: "2026",
+    description:
+      "Plataforma completa para organização de torneios de beach tennis, tênis, futevôlei e padel, com inscrições via PIX, chaves automáticas, placar ao vivo e perfil de atletas.",
+    tags: ["Full Stack", "PIX & Pagamentos", "Placar ao Vivo", "SaaS Esportivo"],
+    liveUrl: "https://protorneios.com.br/",
+    image: "/projects/protorneios-shot.png",
+    imagePosition: "center top",
+  },
+  {
+    number: "05",
+    title: "MinasXtreme",
+    category: "Gestão de campeonatos de motocross",
+    year: "2026",
+    description:
+      "Plataforma para inscrições, pagamentos, vistoria e acompanhamento de resultados em campeonatos de motocross, desenvolvida para um cliente real.",
+    tags: ["Next.js", "Pagamentos", "Gestão esportiva"],
+    liveUrl: "https://minasxtreme.com.br/",
+    image: "/projects/minasxtreme-shot.png",
+    imagePosition: "center center",
   },
   {
     number: "06",
