@@ -195,8 +195,51 @@ function Arrow() {
 function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
   const el = event.currentTarget;
   const rect = el.getBoundingClientRect();
-  el.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`);
-  el.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`);
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const tiltX = ((y - centerY) / centerY) * -6;
+  const tiltY = ((x - centerX) / centerX) * 6;
+
+  el.style.setProperty("--mouse-x", `${x}px`);
+  el.style.setProperty("--mouse-y", `${y}px`);
+  el.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+  el.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+}
+
+function handleSpotlightLeave(event: React.PointerEvent<HTMLElement>) {
+  const el = event.currentTarget;
+  el.style.setProperty("--tilt-x", "0deg");
+  el.style.setProperty("--tilt-y", "0deg");
+}
+
+function handleMagneticMove(event: React.PointerEvent<HTMLElement>) {
+  const el = event.currentTarget;
+  const rect = el.getBoundingClientRect();
+  const x = event.clientX - (rect.left + rect.width / 2);
+  const y = event.clientY - (rect.top + rect.height / 2);
+  el.style.transform = `translate3d(${x * 0.22}px, ${y * 0.22}px, 0)`;
+}
+
+function handleMagneticLeave(event: React.PointerEvent<HTMLElement>) {
+  const el = event.currentTarget;
+  el.style.transform = "translate3d(0, 0, 0)";
+}
+
+function handleArtMove(event: React.PointerEvent<HTMLElement>) {
+  const el = event.currentTarget;
+  const rect = el.getBoundingClientRect();
+  const x = (event.clientX - rect.left) / rect.width - 0.5;
+  const y = (event.clientY - rect.top) / rect.height - 0.5;
+  el.style.setProperty("--art-tilt-x", `${(-y * 24).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-y", `${(x * 24).toFixed(2)}deg`);
+}
+
+function handleArtLeave(event: React.PointerEvent<HTMLElement>) {
+  const el = event.currentTarget;
+  el.style.setProperty("--art-tilt-x", "0deg");
+  el.style.setProperty("--art-tilt-y", "0deg");
 }
 
 function ProjectCard({ project }: { project: Project }) {
@@ -231,6 +274,7 @@ function ProjectCard({ project }: { project: Project }) {
     <article
       className="project reveal spotlight-card"
       onPointerMove={handleSpotlightMove}
+      onPointerLeave={handleSpotlightLeave}
     >
       {project.liveUrl ? (
         <a
@@ -300,6 +344,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("lmp-theme");
@@ -316,6 +361,26 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      document.documentElement.style.setProperty("--cursor-x", `${e.clientX}px`);
+      document.documentElement.style.setProperty("--cursor-y", `${e.clientY}px`);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("pointermove", handlePointerMove);
+    };
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -325,10 +390,11 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.08 }
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
-    document.querySelectorAll(".reveal").forEach((item) => {
+    document.querySelectorAll(".reveal").forEach((item, index) => {
       item.classList.add("will-reveal");
+      (item as HTMLElement).style.setProperty("--reveal-index", `${index % 6}`);
       observer.observe(item);
     });
     return () => observer.disconnect();
@@ -338,12 +404,18 @@ export default function Home() {
     <main id="top">
       <div className="ambient-glow glow-one" aria-hidden="true" />
       <div className="ambient-glow glow-two" aria-hidden="true" />
+      <div className="cursor-follower" aria-hidden="true" />
 
       <a className="skip-link" href="#projetos">
         Pular para projetos
       </a>
 
       <header className="site-header">
+        <div
+          className="scroll-progress-line"
+          style={{ transform: `scaleX(${scrollProgress / 100})` }}
+          aria-hidden="true"
+        />
         <a className="logo" href="#top" aria-label="Lucas Mathias Paixão, início">
           lmp<span>®</span>
         </a>
@@ -405,7 +477,12 @@ export default function Home() {
               ideias.
             </p>
             <div className="hero-actions">
-              <a className="button" href="#projetos">
+              <a
+                className="button"
+                href="#projetos"
+                onPointerMove={handleMagneticMove}
+                onPointerLeave={handleMagneticLeave}
+              >
                 Explorar projetos <Arrow />
               </a>
               <a className="text-link" href="#experiencia">
@@ -417,7 +494,8 @@ export default function Home() {
           <div
             className="hero-art"
             aria-hidden="true"
-            onPointerMove={handleSpotlightMove}
+            onPointerMove={handleArtMove}
+            onPointerLeave={handleArtLeave}
           >
             <div className="art-coordinate">FIG. 01 — SISTEMAS EM ÓRBITA</div>
             <div className="orbital">
@@ -516,6 +594,7 @@ export default function Home() {
               key={`${exp.company}-${exp.role}`}
               className="experience-card reveal spotlight-card"
               onPointerMove={handleSpotlightMove}
+              onPointerLeave={handleSpotlightLeave}
             >
               <div className="experience-header">
                 <div className="experience-brand">
@@ -567,6 +646,7 @@ export default function Home() {
           <div
             className="about-identity reveal spotlight-card"
             onPointerMove={handleSpotlightMove}
+            onPointerLeave={handleSpotlightLeave}
           >
             <div className="identity-art">
               <div className="portrait-Coord" aria-hidden="true">
@@ -662,7 +742,11 @@ export default function Home() {
               <br />
               <em>algo incrível.</em>
             </span>
-            <span className="contact-arrow">
+            <span
+              className="contact-arrow"
+              onPointerMove={handleMagneticMove}
+              onPointerLeave={handleMagneticLeave}
+            >
               <Arrow />
             </span>
           </a>
@@ -695,7 +779,13 @@ export default function Home() {
             Currículo <Arrow />
           </a>
         </div>
-        <a href="#top" className="back-top" aria-label="Voltar ao topo">
+        <a
+          href="#top"
+          className="back-top"
+          aria-label="Voltar ao topo"
+          onPointerMove={handleMagneticMove}
+          onPointerLeave={handleMagneticLeave}
+        >
           ↑
         </a>
       </footer>
