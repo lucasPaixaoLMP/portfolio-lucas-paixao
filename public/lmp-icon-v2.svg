@@ -1,14 +1,18 @@
-<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="14" fill="#171915"/>
-  <path d="M8 49.5H56" stroke="#B9FF23" stroke-width="2"/>
-  <text
-    x="7"
-    y="39"
-    fill="#F4F3EC"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="20"
-    font-weight="800"
-    letter-spacing="-1.4"
-  >LMP</text>
-  <circle cx="55" cy="34" r="3.5" fill="#B9FF23"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="mathixBlue" x1="60" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1682FF" />
+    </linearGradient>
+    <linearGradient id="mathixBg" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#080F1A" />
+      <stop offset="100%" stop-color="#0F2A56" />
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="28" fill="url(#mathixBg)" stroke="#1682FF" stroke-opacity="0.35" stroke-width="2" />
+  <!-- Left Ice White M half -->
+  <path d="M26 94V26L60 56L72 45.5V65L60 75.5L42 59.5V94H26Z" fill="#F4F7FB" />
+  <!-- Right Electric Blue M half -->
+  <path d="M64 41.5L94 15V34.5L64 61V41.5Z" fill="url(#mathixBlue)" />
+  <path d="M78 49L94 35V94H78V49Z" fill="url(#mathixBlue)" />
 </svg>

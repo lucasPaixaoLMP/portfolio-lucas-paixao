@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Project = {
   number: string;
@@ -26,6 +26,82 @@ type Experience = {
   paragraphs: string[];
   skills: string[];
 };
+
+type SolutionPillar = {
+  code: string;
+  tag: string;
+  title: string;
+  description: string;
+  metrics: string;
+  icon: "ai" | "code" | "automation" | "api";
+};
+
+const solutions: SolutionPillar[] = [
+  {
+    code: "01 / IA NA PRÁTICA",
+    tag: "INTELIGÊNCIA ARTIFICIAL",
+    title: "IA precisa resolver problemas reais.",
+    description:
+      "Aplicações que interpretam contexto, automatizam decisões complexas e potencializam pessoas e negócios com LLMs, agentes e pipelines inteligentes.",
+    metrics: "LLMs · Agentes · RAG · Visão",
+    icon: "ai",
+  },
+  {
+    code: "02 / SOFTWARE",
+    tag: "DESENVOLVIMENTO SOB MEDIDA",
+    title: "Seu negócio não precisa se adaptar a qualquer software.",
+    description:
+      "Arquitetura full stack e aplicações web e mobile desenhadas sob medida para os seus processos, regras de negócio e objetivos de escala.",
+    metrics: "Next.js · React · Flutter · Node.js",
+    icon: "code",
+  },
+  {
+    code: "03 / AUTOMAÇÃO",
+    tag: "AUTOMAÇÃO INTELIGENTE",
+    title: "Menos tarefas repetitivas. Mais tempo para crescer.",
+    description:
+      "Orquestração de fluxos inteligentes, atendimento automatizado e processos internos que operam 24/7 com precisão e rastreabilidade.",
+    metrics: "Workflows · Bots · Eficiência",
+    icon: "automation",
+  },
+  {
+    code: "04 / INTEGRAÇÕES",
+    tag: "ECOSSISTEMA & APIS",
+    title: "Seus sistemas podem trabalhar juntos.",
+    description:
+      "Desenvolvimento de APIs de alta performance, webhooks, meios de pagamento (PIX/Stripe) e sincronização segura entre plataformas.",
+    metrics: "REST · GraphQL · Webhooks · Cloud",
+    icon: "api",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    name: "Descoberta",
+    detail: "Imersão no desafio, diagnóstico de gargalos e definição de metas reais.",
+  },
+  {
+    step: "02",
+    name: "Planejamento",
+    detail: "Arquitetura de dados, escolha de modelos de IA e prototipação técnica.",
+  },
+  {
+    step: "03",
+    name: "Desenvolvimento",
+    detail: "Código limpo, sprints ágeis, interfaces fluidas e integrações robustas.",
+  },
+  {
+    step: "04",
+    name: "Testes",
+    detail: "Validação automatizada, segurança, performance e calibração de IA.",
+  },
+  {
+    step: "05",
+    name: "Evolução",
+    detail: "Deploy contínuo, telemetria em produção e escala orientada a dados.",
+  },
+];
 
 /*
  * PERSONALIZE SEUS PROJETOS AQUI:
@@ -150,6 +226,25 @@ const projects: Project[] = [
 
 const experiences: Experience[] = [
   {
+    role: "AI Engineer & Founder",
+    company: "Mathix Labs",
+    type: "Software & IA Studio",
+    period: "2026 - o momento",
+    location: "Brasil · Global",
+    paragraphs: [
+      "Liderança técnica e engenharia de soluções sob medida em software, Inteligência Artificial, automação inteligente e arquitetura de sistemas escaláveis para empresas e produtos digitais.",
+      "Do diagnóstico do problema ao deploy em produção: descoberta, planejamento, desenvolvimento full stack, integração de agentes de IA e evolução contínua orientada a resultados reais.",
+    ],
+    skills: [
+      "Engineering Intelligence",
+      "Software sob Medida",
+      "Agentes de IA & LLMs",
+      "Automação & Integrações",
+      "Arquitetura Cloud",
+      "Produtos SaaS & Mobile",
+    ],
+  },
+  {
     role: "AI Engineer",
     company: "MVP Builders",
     type: "Tempo integral",
@@ -172,14 +267,14 @@ const experiences: Experience[] = [
 
 const skills = [
   "Inteligência Artificial",
+  "Agentes & Automação",
   "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Design Systems",
-  "Motion",
-  "PostgreSQL",
-  "APIs",
+  "React & Next.js",
+  "Node.js & FastAPI",
+  "Flutter",
+  "PostgreSQL & Cloud",
+  "Arquitetura de Sistemas",
+  "APIs & Integrações",
 ];
 
 const linkedIn = "https://www.linkedin.com/in/lucas-mathias-paix%C3%A3o-84a62b198/";
@@ -192,6 +287,205 @@ function Arrow() {
   );
 }
 
+function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 120 108"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient
+          id="mathixElectricGrad"
+          x1="56"
+          y1="8"
+          x2="106"
+          y2="100"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="#3B82F6" />
+          <stop offset="55%" stopColor="#1682FF" />
+          <stop offset="100%" stopColor="#0B5ED7" />
+        </linearGradient>
+      </defs>
+      {/* Left half in Ice White: vertical stem + diagonal chevron */}
+      <path
+        d="M16 96V16L60 54L74 41.5V62.5L60 75L34 52V96H16Z"
+        fill="#F4F7FB"
+      />
+      {/* Right upper diagonal in Electric Blue */}
+      <path
+        d="M64 38L104 4V25.5L64 59.5V38Z"
+        fill="url(#mathixElectricGrad)"
+      />
+      {/* Right vertical stem in Electric Blue */}
+      <path
+        d="M86 45.5L104 30V96H86V45.5Z"
+        fill="url(#mathixElectricGrad)"
+      />
+    </svg>
+  );
+}
+
+function SolutionIcon({ type }: { type: SolutionPillar["icon"] }) {
+  if (type === "ai") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+        <path d="M12 3a4 4 0 0 0-4 4v1a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3v1a4 4 0 0 0 8 0v-1a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3V7a4 4 0 0 0-4-4Z" />
+        <path d="M12 3v18M8 9h8M8 15h8" />
+      </svg>
+    );
+  }
+  if (type === "code") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <polyline points="8 7 3 12 8 17" />
+        <polyline points="16 7 21 12 16 17" />
+        <line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    );
+  }
+  if (type === "automation") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="6" cy="6" r="3" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="12" cy="18" r="3" />
+      <path d="M8.7 7.5 15.3 7.5M7.5 8.6l3.2 6.8M16.5 8.6l-3.2 6.8" />
+    </svg>
+  );
+}
+
+function NeuralNetworkCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId = 0;
+    let width = (canvas.width = canvas.offsetWidth || 500);
+    let height = (canvas.height = canvas.offsetHeight || 500);
+
+    const pointer = { x: width / 2, y: height / 2, active: false };
+
+    const nodeCount = 34;
+    const nodes = Array.from({ length: nodeCount }, (_, i) => {
+      const angle = (i / nodeCount) * Math.PI * 2;
+      const radius = 60 + (i % 4) * 45;
+      return {
+        x: width / 2 + Math.cos(angle) * radius,
+        y: height / 2 + Math.sin(angle) * radius,
+        vx: (Math.random() - 0.5) * 0.65,
+        vy: (Math.random() - 0.5) * 0.65,
+        r: i % 5 === 0 ? 3.2 : 2,
+        pulse: Math.random() * Math.PI * 2,
+      };
+    });
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = canvas.offsetWidth || 500;
+      height = canvas.height = canvas.offsetHeight || 500;
+    };
+
+    const handleMove = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+      pointer.active =
+        pointer.x >= 0 &&
+        pointer.x <= width &&
+        pointer.y >= 0 &&
+        pointer.y <= height;
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("pointermove", handleMove, { passive: true });
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.pulse += 0.035;
+        n.x += n.vx;
+        n.y += n.vy;
+
+        const margin = 28;
+        if (n.x < margin || n.x > width - margin) n.vx *= -1;
+        if (n.y < margin || n.y > height - margin) n.vy *= -1;
+
+        if (pointer.active) {
+          const dx = pointer.x - n.x;
+          const dy = pointer.y - n.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 150 && dist > 1) {
+            n.x += (dx / dist) * 0.55;
+            n.y += (dy / dist) * 0.55;
+          }
+        }
+
+        for (let j = i + 1; j < nodes.length; j++) {
+          const m = nodes[j];
+          const dx = n.x - m.x;
+          const dy = n.y - m.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 128) {
+            const alpha = (1 - dist / 128) * 0.42;
+            ctx.strokeStyle = `rgba(22, 130, 255, ${alpha.toFixed(3)})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(n.x, n.y);
+            ctx.lineTo(m.x, m.y);
+            ctx.stroke();
+
+            if ((i + j) % 7 === 0) {
+              const t = (Math.sin(n.pulse * 0.8 + i) + 1) * 0.5;
+              const px = n.x + (m.x - n.x) * t;
+              const py = n.y + (m.y - n.y) * t;
+              ctx.fillStyle = "rgba(244, 247, 251, 0.85)";
+              ctx.beginPath();
+              ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+
+        const glow = (Math.sin(n.pulse) + 1) * 0.5;
+        ctx.fillStyle = i % 4 === 0 ? "#F4F7FB" : "#1682FF";
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + glow * 0.9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("pointermove", handleMove);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="neural-canvas" aria-hidden="true" />;
+}
+
 function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
   const el = event.currentTarget;
   const rect = el.getBoundingClientRect();
@@ -199,8 +493,8 @@ function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
   const y = event.clientY - rect.top;
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
-  const tiltX = ((y - centerY) / centerY) * -6;
-  const tiltY = ((x - centerX) / centerX) * 6;
+  const tiltX = ((y - centerY) / centerY) * -5.5;
+  const tiltY = ((x - centerX) / centerX) * 5.5;
 
   el.style.setProperty("--mouse-x", `${x}px`);
   el.style.setProperty("--mouse-y", `${y}px`);
@@ -219,7 +513,7 @@ function handleMagneticMove(event: React.PointerEvent<HTMLElement>) {
   const rect = el.getBoundingClientRect();
   const x = event.clientX - (rect.left + rect.width / 2);
   const y = event.clientY - (rect.top + rect.height / 2);
-  el.style.transform = `translate3d(${x * 0.22}px, ${y * 0.22}px, 0)`;
+  el.style.transform = `translate3d(${x * 0.24}px, ${y * 0.24}px, 0)`;
 }
 
 function handleMagneticLeave(event: React.PointerEvent<HTMLElement>) {
@@ -232,8 +526,8 @@ function handleArtMove(event: React.PointerEvent<HTMLElement>) {
   const rect = el.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
-  el.style.setProperty("--art-tilt-x", `${(-y * 24).toFixed(2)}deg`);
-  el.style.setProperty("--art-tilt-y", `${(x * 24).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-x", `${(-y * 22).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-y", `${(x * 22).toFixed(2)}deg`);
 }
 
 function handleArtLeave(event: React.PointerEvent<HTMLElement>) {
@@ -262,6 +556,7 @@ function ProjectCard({ project }: { project: Project }) {
         width="1200"
         height="750"
       />
+      <div className="project-scanline" aria-hidden="true" />
       {project.liveUrl && (
         <span className="open-project">
           <Arrow />
@@ -345,6 +640,7 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("lmp-theme");
@@ -359,6 +655,13 @@ export default function Home() {
     document.documentElement.setAttribute("data-theme", next);
     window.localStorage.setItem("lmp-theme", next);
   };
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % processSteps.length);
+    }, 2800);
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -402,6 +705,7 @@ export default function Home() {
 
   return (
     <main id="top">
+      <div className="cyber-grid-bg" aria-hidden="true" />
       <div className="ambient-glow glow-one" aria-hidden="true" />
       <div className="ambient-glow glow-two" aria-hidden="true" />
       <div className="cursor-follower" aria-hidden="true" />
@@ -416,10 +720,19 @@ export default function Home() {
           style={{ transform: `scaleX(${scrollProgress / 100})` }}
           aria-hidden="true"
         />
-        <a className="logo" href="#top" aria-label="Lucas Mathias Paixão, início">
-          lmp<span>®</span>
+        <a
+          className="logo brand-logo"
+          href="#top"
+          aria-label="Mathix Labs — Lucas Mathias Paixão, início"
+        >
+          <MathixMonogram className="header-monogram" />
+          <span className="brand-wordmark">
+            <strong>MATHIX</strong>
+            <small>LABS</small>
+          </span>
         </a>
         <nav aria-label="Navegação principal">
+          <a href="#solucoes">Soluções</a>
           <a href="#projetos">
             Projetos <sup>09</sup>
           </a>
@@ -446,36 +759,47 @@ export default function Home() {
           </button>
           <a className="availability" href="#contato">
             <i />
-            Disponível para projetos
+            Vamos construir algo inteligente?
           </a>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-kicker">
-          <span>AI ENGINEER &amp; DESENVOLVEDOR FULL STACK</span>
-          <span>SÃO PAULO, BRASIL ↗</span>
+          <span>MATHIX LABS // AI &amp; SOFTWARE ENGINEERING ⚡</span>
+          <span>ENGINEERING INTELLIGENCE. ↗</span>
         </div>
         <div className="hero-content">
           <div className="hero-copy">
             <div className="intro-pill">
               <span className="intro-dot" aria-hidden="true" />
               <p className="intro">
-                Olá, eu sou Lucas Mathias Paixão · AI Engineer @ MVP Builders
+                Lucas Mathias Paixão · AI Engineer &amp; Founder @ Mathix Labs · MVP Builders
               </p>
             </div>
             <h1 id="hero-title">
-              Ideias ganham
+              Engineering
               <br />
-              forma.
+              Intelligence.
               <br />
-              <em>E inteligência.</em>
+              <em>Software &amp; IA.</em>
             </h1>
             <p className="hero-description">
-              Entre o design, a engenharia full stack e a Inteligência Artificial,
-              construo produtos digitais escaláveis que conectam pessoas a grandes
-              ideias.
+              Desenvolvemos soluções inteligentes em software, IA e sistemas para
+              um futuro mais eficiente. Tecnologia com propósito, qualidade e
+              resultados reais.
             </p>
+            <div className="hero-pillars" aria-label="Pilares da Mathix Labs">
+              <span>
+                <i>◈</i> Desenvolvimento sob medida
+              </span>
+              <span>
+                <i>◈</i> Inteligência Artificial
+              </span>
+              <span>
+                <i>◈</i> Automação e integrações
+              </span>
+            </div>
             <div className="hero-actions">
               <a
                 className="button"
@@ -485,8 +809,16 @@ export default function Home() {
               >
                 Explorar projetos <Arrow />
               </a>
-              <a className="text-link" href="#experiencia">
-                Minha trajetória <span>↘</span>
+              <a
+                className="button button-secondary"
+                href="#solucoes"
+                onPointerMove={handleMagneticMove}
+                onPointerLeave={handleMagneticLeave}
+              >
+                Nossas soluções
+              </a>
+              <a className="text-link" href="#contato">
+                Construir algo inteligente <span>↘</span>
               </a>
             </div>
           </div>
@@ -497,35 +829,52 @@ export default function Home() {
             onPointerMove={handleArtMove}
             onPointerLeave={handleArtLeave}
           >
-            <div className="art-coordinate">FIG. 01 — SISTEMAS EM ÓRBITA</div>
+            <NeuralNetworkCanvas />
+            <div className="art-coordinate">
+              <span>MATHIX LABS // CORE V2.6</span>
+              <span>ONLINE · 99.9%</span>
+            </div>
             <div className="orbital">
               <div className="orbit orbit-one" />
               <div className="orbit orbit-two" />
               <div className="orbit orbit-three" />
               <div className="orbit orbit-four" />
-              <div className="orb-core">✳</div>
               <span className="satellite" />
               <span className="satellite satellite-two" />
+              <span className="satellite satellite-three" />
+            </div>
+            <div className="orb-core-monogram">
+              <div className="monogram-halo" />
+              <MathixMonogram className="hero-monogram-svg" />
+              <span className="monogram-caption">MATHIX LABS</span>
+              <span className="monogram-sub">ENGINEERING INTELLIGENCE.</span>
+            </div>
+            <div className="hud-floating hud-top-right">
+              <span className="hud-dot" />
+              <span>IA · SOFTWARE · AUTOMAÇÃO</span>
+            </div>
+            <div className="hud-floating hud-bottom-left">
+              <span>DESCOBERTA → EVOLUÇÃO</span>
             </div>
             <span className="art-cross cross-one">+</span>
             <span className="art-cross cross-two">+</span>
             <div className="art-label">
               <span>
-                ENGENHARIA + IA
+                SISTEMAS INTELIGENTES.
                 <br />
-                EM CONSTANTE EVOLUÇÃO
+                RESULTADOS REAIS.
               </span>
               <span className="art-symbol">↗</span>
             </div>
           </div>
         </div>
         <div className="hero-foot">
-          <a href="#projetos">
+          <a href="#solucoes">
             <span className="scroll-line" />
             ROLE PARA DESCOBRIR
           </a>
-          <span>DESIGN COM INTENÇÃO. CÓDIGO E IA COM PRECISÃO.</span>
-          <span>PORTFÓLIO — 2026</span>
+          <span>IDEIAS INTELIGENTES. SOFTWARE REAL. ENGENHARIA COM PROPÓSITO.</span>
+          <span>MATHIX LABS — 2026</span>
         </div>
       </section>
 
@@ -533,18 +882,99 @@ export default function Home() {
         <div>
           {[0, 1].map((n) => (
             <span key={n}>
-              AI ENGINEERING <i>✳</i> FULL STACK <i>✳</i> DESIGN DE PRODUTO{" "}
-              <i>✳</i> ARQUITETURA ESCALÁVEL <i>✳</i> EXPERIÊNCIA &amp; MOTION{" "}
-              <i>✳</i>{" "}
+              MATHIX LABS <i>◈</i> ENGINEERING INTELLIGENCE <i>◈</i> DESENVOLVIMENTO
+              SOB MEDIDA <i>◈</i> INTELIGÊNCIA ARTIFICIAL <i>◈</i> AUTOMAÇÃO &amp;
+              INTEGRAÇÕES <i>◈</i> SISTEMAS ESCALÁVEIS <i>◈</i>{" "}
             </span>
           ))}
         </div>
       </div>
 
+      <section className="solutions-section" id="solucoes">
+        <div className="section-title reveal">
+          <div>
+            <span className="eyebrow">00 / SOLUÇÕES &amp; ENGENHARIA</span>
+            <h2>
+              Ideias inteligentes.
+              <br />
+              <em>Software real.</em>
+            </h2>
+          </div>
+          <div className="section-aside">
+            <span className="small-star">◈</span>
+            <p>
+              Somos a Mathix Labs, dedicada a transformar
+              <br />
+              desafios complexos em soluções digitais sob medida.
+            </p>
+            <span className="eyebrow">IA · SOFTWARE · SISTEMAS · AUTOMAÇÃO</span>
+          </div>
+        </div>
+
+        <div className="solutions-grid">
+          {solutions.map((item) => (
+            <div
+              key={item.code}
+              className="solution-card reveal spotlight-card"
+              onPointerMove={handleSpotlightMove}
+              onPointerLeave={handleSpotlightLeave}
+            >
+              <div className="solution-card-top">
+                <span className="solution-tag">{item.tag}</span>
+                <div className="solution-icon" aria-hidden="true">
+                  <SolutionIcon type={item.icon} />
+                </div>
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <div className="solution-card-foot">
+                <span className="eyebrow">{item.code}</span>
+                <span className="solution-metrics">{item.metrics}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className="process-banner reveal spotlight-card"
+          onPointerMove={handleSpotlightMove}
+          onPointerLeave={handleSpotlightLeave}
+        >
+          <div className="process-header">
+            <div>
+              <span className="eyebrow">NOSSO PROCESSO // MÉTODO &amp; PRECISÃO</span>
+              <h3>
+                Do problema à <em>solução.</em>
+              </h3>
+            </div>
+            <p>
+              Tecnologia com propósito, qualidade e engenharia ponta a ponta em 5
+              etapas conectadas.
+            </p>
+          </div>
+          <div className="process-track">
+            {processSteps.map((s, idx) => (
+              <div
+                key={s.step}
+                className={`process-step ${idx === activeStep ? "is-active" : ""}`}
+                onPointerEnter={() => setActiveStep(idx)}
+              >
+                <div className="process-step-head">
+                  <span className="process-num">{s.step}</span>
+                  <span className="process-connector" aria-hidden="true" />
+                </div>
+                <h4>{s.name}</h4>
+                <p>{s.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="projects-section" id="projetos">
         <div className="section-title reveal">
           <div>
-            <span className="eyebrow">01 / TRABALHOS SELECIONADOS</span>
+            <span className="eyebrow">01 / PROJETOS &amp; SISTEMAS REAIS</span>
             <h2>
               Do conceito
               <br />
@@ -552,10 +982,10 @@ export default function Home() {
             </h2>
           </div>
           <div className="section-aside">
-            <span className="small-star">✳</span>
+            <span className="small-star">◈</span>
             <p>
-              Produtos reais, desafios diferentes.
-              <br />O mesmo cuidado em cada detalhe.
+              Produtos em produção, arquiteturas escaláveis
+              <br />e interfaces desenhadas para alta conversão.
             </p>
             <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (09)</span>
           </div>
@@ -570,7 +1000,7 @@ export default function Home() {
       <section className="experience-section" id="experiencia">
         <div className="section-title reveal">
           <div>
-            <span className="eyebrow">02 / EXPERIÊNCIA PROFISSIONAL</span>
+            <span className="eyebrow">02 / EXPERIÊNCIA &amp; LIDERANÇA TÉCNICA</span>
             <h2>
               Engenharia com
               <br />
@@ -578,13 +1008,13 @@ export default function Home() {
             </h2>
           </div>
           <div className="section-aside">
-            <span className="small-star">✳</span>
+            <span className="small-star">◈</span>
             <p>
               Construindo sistemas modernos de ponta a ponta
               <br />
               com IA integrada ao ciclo de engenharia.
             </p>
-            <span className="eyebrow">CARREIRA &amp; ATUAÇÃO ATUAL</span>
+            <span className="eyebrow">MATHIX LABS &amp; MVP BUILDERS</span>
           </div>
         </div>
 
@@ -599,7 +1029,11 @@ export default function Home() {
               <div className="experience-header">
                 <div className="experience-brand">
                   <div className="company-logo" aria-hidden="true">
-                    <span>✳</span>
+                    {exp.company === "Mathix Labs" ? (
+                      <MathixMonogram className="exp-monogram" />
+                    ) : (
+                      <span>◈</span>
+                    )}
                   </div>
                   <div>
                     <div className="experience-status">
@@ -639,8 +1073,8 @@ export default function Home() {
 
       <section className="about" id="sobre">
         <div className="about-top reveal">
-          <span className="eyebrow">03 / POR TRÁS DO CÓDIGO</span>
-          <span className="eyebrow">CURIOSIDADE COMO PONTO DE PARTIDA.</span>
+          <span className="eyebrow">03 / CONHEÇA O FUNDADOR</span>
+          <span className="eyebrow">ENGINEERING INTELLIGENCE // MATHIX LABS</span>
         </div>
         <div className="about-grid">
           <div
@@ -650,12 +1084,12 @@ export default function Home() {
           >
             <div className="identity-art">
               <div className="portrait-Coord" aria-hidden="true">
-                <span>LMP // 2026</span>
-                <span>AI + FULL STACK</span>
+                <span>MATHIX LABS // 2026</span>
+                <span>AI ENGINEER &amp; FOUNDER</span>
               </div>
               <div className="portrait-halo" aria-hidden="true" />
               <div className="portrait-ring" aria-hidden="true" />
-              <i aria-hidden="true">✳</i>
+              <i aria-hidden="true">◈</i>
               <img
                 className="portrait-photo"
                 src="/lucas-paixao.png"
@@ -668,29 +1102,31 @@ export default function Home() {
             </div>
             <div className="identity-caption">
               <span>LUCAS MATHIAS PAIXÃO</span>
-              <span>AI ENGINEER &amp; DESENVOLVEDOR FULL STACK</span>
+              <span>AI ENGINEER &amp; FOUNDER @ MATHIX LABS</span>
             </div>
           </div>
           <div className="about-copy reveal">
             <h2>
-              Lógica para construir.
+              Por trás da tecnologia,
               <br />
               <em>
-                Sensibilidade
+                existe
                 <br />
-                para ir além.
+                engenharia.
               </em>
             </h2>
             <p>
-              Sou Lucas, AI Engineer na MVP Builders e desenvolvedor full stack com
-              olhar apurado para design. Transformo ideias complexas em
-              experiências simples, úteis e memoráveis — do primeiro wireframe à
-              arquitetura escalável em produção.
+              Sou <strong>Lucas Mathias Paixão</strong>, fundador da{" "}
+              <strong>Mathix Labs</strong> e AI Engineer na{" "}
+              <strong>MVP Builders</strong>. Especialista em transformar desafios de
+              negócio em software sob medida, arquiteturas escaláveis e aplicações
+              potencializadas por Inteligência Artificial.
             </p>
             <p>
-              Uno engenharia de software moderna e Inteligência Artificial para
-              acelerar entregas sem abrir mão de performance, usabilidade e cuidado
-              visual em cada interação.
+              Uma solução começa com uma pergunta: qual problema real estamos
+              resolvendo? Combinamos método, engenharia de software moderna e
+              automação inteligente para entregar sistemas rápidos, seguros e com
+              design de alto impacto.
             </p>
             <div className="about-links">
               <a
@@ -699,7 +1135,7 @@ export default function Home() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Conheça minha trajetória <Arrow />
+                Baixar currículo completo <Arrow />
               </a>
               <a
                 className="text-link"
@@ -707,16 +1143,16 @@ export default function Home() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Ver perfil no LinkedIn <Arrow />
+                Conectar no LinkedIn <Arrow />
               </a>
             </div>
           </div>
         </div>
         <div className="skills-row reveal">
           <span className="eyebrow">
-            MINHA CAIXA
+            STACK &amp; TECNOLOGIAS
             <br />
-            DE FERRAMENTAS
+            MATHIX LABS
           </span>
           <div className="skills-list">
             {skills.map((skill) => (
@@ -728,19 +1164,19 @@ export default function Home() {
 
       <section className="contact" id="contato">
         <div className="contact-top reveal">
-          <span className="eyebrow">04 / O PRÓXIMO PROJETO</span>
+          <span className="eyebrow">04 / VAMOS CONVERSAR</span>
           <span className="availability">
             <i />
-            Vamos tirar sua ideia do papel
+            Tem um projeto em mente? Vamos transformar em software
           </span>
         </div>
         <div className="contact-main reveal">
-          <p>Uma boa conversa pode ser o começo.</p>
+          <p>Conte seu desafio. Nós te ajudamos a transformar em realidade.</p>
           <a href={linkedIn} target="_blank" rel="noreferrer">
             <span>
-              Vamos criar
+              Vamos construir sua
               <br />
-              <em>algo incrível.</em>
+              <em>próxima solução?</em>
             </span>
             <span
               className="contact-arrow"
@@ -752,7 +1188,9 @@ export default function Home() {
           </a>
         </div>
         <div className="contact-bottom">
-          <span>Tem um desafio em mente? Me chame no LinkedIn.</span>
+          <span>
+            Mathix Labs | Software, Sistemas &amp; Inteligência Artificial sob medida.
+          </span>
           <a className="text-link" href={linkedIn} target="_blank" rel="noreferrer">
             Iniciar uma conversa <Arrow />
           </a>
@@ -760,10 +1198,14 @@ export default function Home() {
       </section>
 
       <footer>
-        <a className="logo" href="#top" aria-label="Voltar ao início">
-          lmp<span>®</span>
+        <a className="logo brand-logo" href="#top" aria-label="Voltar ao início">
+          <MathixMonogram className="header-monogram" />
+          <span className="brand-wordmark">
+            <strong>MATHIX</strong>
+            <small>LABS</small>
+          </span>
         </a>
-        <span>© 2026 LUCAS MATHIAS PAIXÃO</span>
+        <span>© 2026 MATHIX LABS · LUCAS MATHIAS PAIXÃO — ENGINEERING INTELLIGENCE.</span>
         <div className="social-links">
           <a
             href="https://github.com/lucasPaixaoLMP"
