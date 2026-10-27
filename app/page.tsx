@@ -29,20 +29,17 @@ type Experience = {
   skills: string[];
 };
 
-type SolutionBlueprint = {
+type SolutionPillar = {
   id: string;
   code: string;
   tag: string;
   title: string;
   description: string;
   metrics: string;
-  latency: string;
-  throughput: string;
-  architectureNodes: string[];
-  snippet: string[];
+  icon: "ai" | "software" | "automation" | "api";
 };
 
-const blueprints: SolutionBlueprint[] = [
+const solutions: SolutionPillar[] = [
   {
     id: "ai",
     code: "01 / IA NA PRÁTICA",
@@ -51,21 +48,7 @@ const blueprints: SolutionBlueprint[] = [
     description:
       "Aplicações que interpretam contexto, automatizam decisões complexas e potencializam pessoas e negócios com LLMs, agentes autônomos e recuperação semântica (RAG).",
     metrics: "LLMs · Agentes · RAG · Visão",
-    latency: "18.4 ms",
-    throughput: "99.4% precisão",
-    architectureNodes: [
-      "Ingestão & Contexto",
-      "Roteador Semântico",
-      "Agente Mathix AI",
-      "Validação & Ação",
-    ],
-    snippet: [
-      "const agent = await mathix.ai.orchestrate({",
-      "  model: 'mathix-intelligence-v2',",
-      "  context: businessKnowledgeBase,",
-      "  guardrails: ['strict-schema', 'audit-log'],",
-      "});",
-    ],
+    icon: "ai",
   },
   {
     id: "software",
@@ -75,20 +58,7 @@ const blueprints: SolutionBlueprint[] = [
     description:
       "Arquitetura full stack web e mobile desenhada sob medida para os seus processos, regras de negócio e objetivos reais de crescimento e conversão.",
     metrics: "Next.js · React · Flutter · Node.js",
-    latency: "11.2 ms",
-    throughput: "99.98% uptime",
-    architectureNodes: [
-      "Design System OD",
-      "Edge SSR / App Mobile",
-      "Core Domain API",
-      "Cluster Multi-Região",
-    ],
-    snippet: [
-      "export async function deployCustomSystem(spec: DomainSpec) {",
-      "  const pipeline = createCleanArchitecture(spec);",
-      "  return pipeline.withZeroDowntime().ship();",
-      "}",
-    ],
+    icon: "software",
   },
   {
     id: "automation",
@@ -98,20 +68,7 @@ const blueprints: SolutionBlueprint[] = [
     description:
       "Orquestração de fluxos inteligentes, atendimento automatizado e processos internos que operam 24/7 com precisão, logs auditáveis e zero atrito.",
     metrics: "Workflows · Filas · Workers 24/7",
-    latency: "6.8 ms",
-    throughput: "-68% trabalho manual",
-    architectureNodes: [
-      "Gatilho de Evento",
-      "Fila Distribuída",
-      "Worker Inteligente",
-      "Notificação & CRM",
-    ],
-    snippet: [
-      "workflow.on('lead.received', async (event) => {",
-      "  const score = await ai.qualifyLead(event.payload);",
-      "  await crm.syncAndNotify({ lead: event.id, score });",
-      "});",
-    ],
+    icon: "automation",
   },
   {
     id: "api",
@@ -121,21 +78,7 @@ const blueprints: SolutionBlueprint[] = [
     description:
       "Desenvolvimento de APIs de alta performance, webhooks, meios de pagamento (PIX, split, recorrência) e sincronização segura entre ERP, CRM e apps.",
     metrics: "REST · GraphQL · Webhooks · PIX",
-    latency: "9.1 ms",
-    throughput: "12k req/s",
-    architectureNodes: [
-      "API Gateway",
-      "Auth & Rate Limit",
-      " Barramento de Eventos",
-      "ERP / PIX / Webhooks",
-    ],
-    snippet: [
-      "const payment = await mathix.bridge.execute({",
-      "  provider: 'pix-instant-settlement',",
-      "  idempotencyKey: tx.hash,",
-      "  webhookSync: ['erp', 'analytics'],",
-      "});",
-    ],
+    icon: "api",
   },
 ];
 
@@ -149,7 +92,7 @@ const processSteps = [
   {
     step: "02",
     name: "Planejamento",
-    deliverable: "Blueprint de Arquitetura & Protótipo OD",
+    deliverable: "Blueprint de Arquitetura & Protótipo",
     detail: "Arquitetura de dados, escolha de modelos de IA e especificação técnica.",
   },
   {
@@ -400,12 +343,51 @@ function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
   );
 }
 
+function SolutionIcon({ type }: { type: SolutionPillar["icon"] }) {
+  if (type === "ai") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+        <path d="M12 3a4 4 0 0 0-4 4v1a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3v1a4 4 0 0 0 8 0v-1a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3V7a4 4 0 0 0-4-4Z" />
+        <path d="M12 3v18M8 9h8M8 15h8" />
+      </svg>
+    );
+  }
+  if (type === "software") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <polyline points="8 7 3 12 8 17" />
+        <polyline points="16 7 21 12 16 17" />
+        <line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    );
+  }
+  if (type === "automation") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="6" cy="6" r="3" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="12" cy="18" r="3" />
+      <path d="M8.7 7.5 15.3 7.5M7.5 8.6l3.2 6.8M16.5 8.6l-3.2 6.8" />
+    </svg>
+  );
+}
+
 function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const boostRef = useRef(0);
 
   useEffect(() => {
-    boostRef.current = 1;
+    if (pulseBoost > 0) {
+      boostRef.current = 1;
+    }
   }, [pulseBoost]);
 
   useEffect(() => {
@@ -420,7 +402,7 @@ function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
 
     const pointer = { x: width / 2, y: height / 2, active: false };
 
-    const nodeCount = 36;
+    const nodeCount = 34;
     const nodes = Array.from({ length: nodeCount }, (_, i) => {
       const angle = (i / nodeCount) * Math.PI * 2;
       const radius = 56 + (i % 4) * 44;
@@ -441,6 +423,7 @@ function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
     };
 
     const handleMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       const rect = canvas.getBoundingClientRect();
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
@@ -456,8 +439,8 @@ function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      const speedMult = 1 + boostRef.current * 2.4;
-      boostRef.current *= 0.96;
+      const speedMult = 1 + boostRef.current * 2.2;
+      boostRef.current *= 0.95;
 
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
@@ -528,6 +511,7 @@ function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
 }
 
 function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
+  if (event.pointerType !== "mouse") return;
   const el = event.currentTarget;
   const rect = el.getBoundingClientRect();
   const x = event.clientX - rect.left;
@@ -550,11 +534,12 @@ function handleSpotlightLeave(event: React.PointerEvent<HTMLElement>) {
 }
 
 function handleMagneticMove(event: React.PointerEvent<HTMLElement>) {
+  if (event.pointerType !== "mouse") return;
   const el = event.currentTarget;
   const rect = el.getBoundingClientRect();
   const x = event.clientX - (rect.left + rect.width / 2);
   const y = event.clientY - (rect.top + rect.height / 2);
-  el.style.transform = `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
+  el.style.transform = `translate3d(${x * 0.18}px, ${y * 0.18}px, 0)`;
 }
 
 function handleMagneticLeave(event: React.PointerEvent<HTMLElement>) {
@@ -563,12 +548,13 @@ function handleMagneticLeave(event: React.PointerEvent<HTMLElement>) {
 }
 
 function handleArtMove(event: React.PointerEvent<HTMLElement>) {
+  if (event.pointerType !== "mouse") return;
   const el = event.currentTarget;
   const rect = el.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
-  el.style.setProperty("--art-tilt-x", `${(-y * 18).toFixed(2)}deg`);
-  el.style.setProperty("--art-tilt-y", `${(x * 18).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-x", `${(-y * 16).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-y", `${(x * 16).toFixed(2)}deg`);
 }
 
 function handleArtLeave(event: React.PointerEvent<HTMLElement>) {
@@ -699,13 +685,11 @@ function ProjectCard({
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeBlueprint, setActiveBlueprint] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [projectFilter, setProjectFilter] = useState<
     "all" | "saas" | "mobile" | "apps"
   >("all");
   const [pulseBoost, setPulseBoost] = useState(0);
-  const [simulatingNode, setSimulatingNode] = useState<number | null>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("lmp-theme");
@@ -719,19 +703,6 @@ export default function Home() {
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
     window.localStorage.setItem("lmp-theme", next);
-  };
-
-  const triggerBlueprintSimulation = () => {
-    setPulseBoost((prev) => prev + 1);
-    setSimulatingNode(0);
-    [1, 2, 3].forEach((stepIndex) => {
-      window.setTimeout(() => {
-        setSimulatingNode(stepIndex);
-      }, stepIndex * 320);
-    });
-    window.setTimeout(() => {
-      setSimulatingNode(null);
-    }, 1500);
   };
 
   useEffect(() => {
@@ -748,6 +719,7 @@ export default function Home() {
     };
 
     const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       document.documentElement.style.setProperty("--cursor-x", `${e.clientX}px`);
       document.documentElement.style.setProperty("--cursor-y", `${e.clientY}px`);
     };
@@ -781,8 +753,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  const currentBlueprint = blueprints[activeBlueprint];
-
   return (
     <main id="top" className="od-workspace">
       <div className="cyber-grid-bg" aria-hidden="true" />
@@ -794,7 +764,7 @@ export default function Home() {
         Pular para projetos
       </a>
 
-      {/* OPEN DESIGN FLUID ISLAND NAVBAR */}
+      {/* FLUID ISLAND NAVBAR */}
       <div className="island-header-wrap">
         <header className="site-header island-header">
           <div
@@ -858,7 +828,7 @@ export default function Home() {
           <span className="kicker-badge">
             <i>◈</i> MATHIX LABS // AI &amp; SOFTWARE ENGINEERING
           </span>
-          <span>OPEN DESIGN SYSTEM · SÃO PAULO, BR ↗</span>
+          <span>ENGINEERING INTELLIGENCE · SÃO PAULO, BR ↗</span>
         </div>
 
         <div className="hero-content">
@@ -914,7 +884,7 @@ export default function Home() {
                 onPointerMove={handleMagneticMove}
                 onPointerLeave={handleMagneticLeave}
               >
-                <span>Arquitetura &amp; IA</span>
+                <span>Nossas soluções</span>
                 <span className="btn-island-icon">⚡</span>
               </a>
               <a className="text-link" href="#contato">
@@ -932,7 +902,7 @@ export default function Home() {
             <div className="hero-art bezel-core" aria-hidden="true">
               <NeuralNetworkCanvas pulseBoost={pulseBoost} />
               <div className="art-coordinate">
-                <span>OD // MATHIX CORE V3.0</span>
+                <span>MATHIX LABS // CORE V3.0</span>
                 <span className="live-telemetry">● TELEMETRIA ATIVA · 99.98%</span>
               </div>
 
@@ -1005,7 +975,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ASYMMETRICAL BENTO SOLUTIONS & INTERACTIVE CONSOLE */}
+      {/* SOLUTIONS & PROCESS SECTION (SEM ARCHITECTURE-CONSOLE) */}
       <section className="solutions-section" id="solucoes">
         <div className="section-title reveal">
           <div>
@@ -1023,147 +993,34 @@ export default function Home() {
               <br />
               desenhadas para resolver problemas reais de negócio.
             </p>
-            <span className="eyebrow">ARQUITETURA BENTO // OPEN DESIGN</span>
+            <span className="eyebrow">IA · SOFTWARE · SISTEMAS · AUTOMAÇÃO</span>
           </div>
         </div>
 
-        <div className="bento-solutions-grid">
-          {/* ASYMMETRICAL BENTO SPAN 7: INTERACTIVE ARCHITECTURE CONSOLE */}
-          <div
-            className="bento-console bezel-shell reveal spotlight-card"
-            onPointerMove={handleSpotlightMove}
-            onPointerLeave={handleSpotlightLeave}
-          >
-            <div className="bezel-core console-core">
-              <div className="console-topbar">
-                <div className="console-dots" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                  <span>mathix-labs://architecture-console</span>
-                </div>
-                <button
-                  type="button"
-                  className="console-run-btn"
-                  onClick={triggerBlueprintSimulation}
-                >
-                  <span>⚡ Simular pipeline</span>
-                </button>
-              </div>
-
-              <div className="console-tabs" role="tablist" aria-label="Pilares de engenharia">
-                {blueprints.map((bp, idx) => (
-                  <button
-                    key={bp.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeBlueprint === idx}
-                    className={`console-tab ${activeBlueprint === idx ? "is-active" : ""}`}
-                    onClick={() => setActiveBlueprint(idx)}
-                  >
-                    <span className="tab-num">0{idx + 1}</span>
-                    <span>{bp.tag}</span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="console-body">
-                <div className="console-info">
-                  <span className="solution-tag">{currentBlueprint.code}</span>
-                  <h3>{currentBlueprint.title}</h3>
-                  <p>{currentBlueprint.description}</p>
-
-                  <div className="architecture-flow">
-                    {currentBlueprint.architectureNodes.map((node, i) => (
-                      <div
-                        key={node}
-                        className={`arch-node ${
-                          simulatingNode === i ? "is-pulsing" : ""
-                        }`}
-                      >
-                        <span className="arch-index">0{i + 1}</span>
-                        <span className="arch-name">{node}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="console-code-box">
-                  <div className="code-box-head">
-                    <span>BLUEPRINT.TS</span>
-                    <span>{currentBlueprint.latency} · {currentBlueprint.throughput}</span>
-                  </div>
-                  <pre>
-                    <code>
-                      {currentBlueprint.snippet.map((line, i) => (
-                        <span key={i} className="code-line">
-                          <small>{i + 1}</small>
-                          {line}
-                        </span>
-                      ))}
-                    </code>
-                  </pre>
-                  <div className="code-box-foot">
-                    <span>STACK: {currentBlueprint.metrics}</span>
-                    <span className="status-ready">● PRONTO PARA PRODUÇÃO</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ASYMMETRICAL BENTO SPAN 5: 2X2 PILLAR MATRIX + METRICS */}
-          <div className="bento-side-stack">
-            <div className="bento-mini-grid">
-              {blueprints.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className={`bezel-shell bento-pillar-shell reveal spotlight-card ${
-                    activeBlueprint === idx ? "is-selected" : ""
-                  }`}
-                  onClick={() => setActiveBlueprint(idx)}
-                  onPointerMove={handleSpotlightMove}
-                  onPointerLeave={handleSpotlightLeave}
-                >
-                  <div className="bezel-core bento-pillar-core">
-                    <div className="pillar-head">
-                      <span className="eyebrow">{item.code}</span>
-                      <span className="pillar-arrow">↗</span>
-                    </div>
-                    <h4>{item.tag}</h4>
-                    <p>{item.metrics}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+        <div className="solutions-cards-grid">
+          {solutions.map((item) => (
             <div
-              className="bezel-shell bento-telemetry-shell reveal spotlight-card"
+              key={item.id}
+              className="bezel-shell solution-shell reveal spotlight-card"
               onPointerMove={handleSpotlightMove}
               onPointerLeave={handleSpotlightLeave}
             >
-              <div className="bezel-core bento-telemetry-core">
-                <div className="telemetry-header">
-                  <span className="eyebrow">MÉTRICAS DE ENGENHARIA // 2026</span>
-                  <span className="telemetry-badge">PRODUÇÃO REAL</span>
+              <div className="bezel-core solution-core">
+                <div className="solution-top">
+                  <span className="solution-tag">{item.tag}</span>
+                  <div className="solution-icon" aria-hidden="true">
+                    <SolutionIcon type={item.icon} />
+                  </div>
                 </div>
-                <div className="telemetry-stats">
-                  <div className="od-stat">
-                    <strong>09+</strong>
-                    <span>Sistemas &amp; produtos publicados</span>
-                  </div>
-                  <div className="od-stat">
-                    <strong>-68%</strong>
-                    <span>Redução em rotinas operacionais</span>
-                  </div>
-                  <div className="od-stat">
-                    <strong>99.9%</strong>
-                    <span>Disponibilidade em arquiteturas cloud</span>
-                  </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <div className="solution-foot">
+                  <span className="eyebrow">{item.code}</span>
+                  <span className="solution-stack">{item.metrics}</span>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* DOUBLE-BEZEL 5-STAGE PROCESS PIPELINE */}
