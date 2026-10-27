@@ -308,7 +308,7 @@ function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 120 108"
+      viewBox="0 0 120 112"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -316,27 +316,27 @@ function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
       <defs>
         <linearGradient
           id="mathixElectricGrad"
-          x1="56"
+          x1="58"
           y1="8"
-          x2="106"
+          x2="104"
           y2="100"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="55%" stopColor="#1682FF" />
+          <stop offset="0%" stopColor="#4DA3FF" />
+          <stop offset="50%" stopColor="#1682FF" />
           <stop offset="100%" stopColor="#0B5ED7" />
         </linearGradient>
       </defs>
       <path
-        d="M16 96V16L60 54L74 41.5V62.5L60 75L34 52V96H16Z"
+        d="M16 18L58 51V74L36 56.5V100H16V18Z"
         fill="#F4F7FB"
       />
       <path
-        d="M64 38L104 4V25.5L64 59.5V38Z"
+        d="M58 40L104 4V27L58 63V40Z"
         fill="url(#mathixElectricGrad)"
       />
       <path
-        d="M86 45.5L104 30V96H86V45.5Z"
+        d="M83 53L104 36.5V100H83V53Z"
         fill="url(#mathixElectricGrad)"
       />
     </svg>

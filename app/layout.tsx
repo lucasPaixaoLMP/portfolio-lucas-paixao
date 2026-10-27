@@ -35,8 +35,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     icons: {
-      icon: [{ url: "/lmp-icon-v2.svg", type: "image/svg+xml" }],
-      shortcut: "/lmp-icon-v2.svg",
+      icon: [
+        { url: "/mathix-favicon.svg", type: "image/svg+xml", sizes: "any" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+      ],
+      shortcut: "/mathix-favicon.svg",
+      apple: "/mathix-favicon.svg",
     },
     openGraph: {
       title,

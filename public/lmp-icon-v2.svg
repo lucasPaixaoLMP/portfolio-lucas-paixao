@@ -1,18 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
   <defs>
-    <linearGradient id="mathixBlue" x1="60" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#3B82F6" />
-      <stop offset="100%" stop-color="#1682FF" />
+    <radialGradient id="mathixBg" cx="25%" cy="20%" r="85%">
+      <stop offset="0%" stop-color="#0F2A56" />
+      <stop offset="55%" stop-color="#080F1A" />
+      <stop offset="100%" stop-color="#050911" />
+    </radialGradient>
+    <radialGradient id="mathixGlow" cx="78%" cy="78%" r="55%">
+      <stop offset="0%" stop-color="#1682FF" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#1682FF" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="mathixBlue" x1="62" y1="14" x2="104" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4DA3FF" />
+      <stop offset="50%" stop-color="#1682FF" />
+      <stop offset="100%" stop-color="#0B5ED7" />
     </linearGradient>
-    <linearGradient id="mathixBg" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#080F1A" />
-      <stop offset="100%" stop-color="#0F2A56" />
+    <linearGradient id="mathixRing" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#1682FF" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.6" />
     </linearGradient>
   </defs>
-  <rect width="120" height="120" rx="28" fill="url(#mathixBg)" stroke="#1682FF" stroke-opacity="0.35" stroke-width="2" />
-  <!-- Left Ice White M half -->
-  <path d="M26 94V26L60 56L72 45.5V65L60 75.5L42 59.5V94H26Z" fill="#F4F7FB" />
-  <!-- Right Electric Blue M half -->
-  <path d="M64 41.5L94 15V34.5L64 61V41.5Z" fill="url(#mathixBlue)" />
-  <path d="M78 49L94 35V94H78V49Z" fill="url(#mathixBlue)" />
+
+  <!-- Midnight Squircle Container -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#mathixBg)" />
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#mathixGlow)" />
+  <rect x="4" y="4" width="120" height="120" rx="28" stroke="url(#mathixRing)" stroke-width="2.5" />
+
+  <!-- Left Ice White M Half -->
+  <path
+    d="M22 24L62 56V78L41 61V104H22V24Z"
+    fill="#F4F7FB"
+  />
+
+  <!-- Right Electric Blue Upper Wing (stepped at center axis) -->
+  <path
+    d="M62 46L106 11V33L62 68V46Z"
+    fill="url(#mathixBlue)"
+  />
+
+  <!-- Right Electric Blue Lower Pillar -->
+  <path
+    d="M86 58L106 42V104H86V58Z"
+    fill="url(#mathixBlue)"
+  />
 </svg>
