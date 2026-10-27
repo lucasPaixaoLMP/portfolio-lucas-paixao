@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Geist_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 
@@ -9,15 +9,16 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -61,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable}`}
+        className={`${spaceGrotesk.variable} ${plusJakarta.variable} ${geistMono.variable}`}
       >
         {children}
       </body>

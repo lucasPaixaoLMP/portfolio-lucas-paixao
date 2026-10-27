@@ -6,6 +6,7 @@ type Project = {
   number: string;
   title: string;
   category: string;
+  filterGroup: "saas" | "mobile" | "apps";
   year: string;
   description: string;
   tags: string[];
@@ -15,6 +16,7 @@ type Project = {
   previewHost?: string;
   image: string;
   imagePosition?: string;
+  featured?: boolean;
 };
 
 type Experience = {
@@ -27,51 +29,113 @@ type Experience = {
   skills: string[];
 };
 
-type SolutionPillar = {
+type SolutionBlueprint = {
+  id: string;
   code: string;
   tag: string;
   title: string;
   description: string;
   metrics: string;
-  icon: "ai" | "code" | "automation" | "api";
+  latency: string;
+  throughput: string;
+  architectureNodes: string[];
+  snippet: string[];
 };
 
-const solutions: SolutionPillar[] = [
+const blueprints: SolutionBlueprint[] = [
   {
+    id: "ai",
     code: "01 / IA NA PRÁTICA",
     tag: "INTELIGÊNCIA ARTIFICIAL",
     title: "IA precisa resolver problemas reais.",
     description:
-      "Aplicações que interpretam contexto, automatizam decisões complexas e potencializam pessoas e negócios com LLMs, agentes e pipelines inteligentes.",
+      "Aplicações que interpretam contexto, automatizam decisões complexas e potencializam pessoas e negócios com LLMs, agentes autônomos e recuperação semântica (RAG).",
     metrics: "LLMs · Agentes · RAG · Visão",
-    icon: "ai",
+    latency: "18.4 ms",
+    throughput: "99.4% precisão",
+    architectureNodes: [
+      "Ingestão & Contexto",
+      "Roteador Semântico",
+      "Agente Mathix AI",
+      "Validação & Ação",
+    ],
+    snippet: [
+      "const agent = await mathix.ai.orchestrate({",
+      "  model: 'mathix-intelligence-v2',",
+      "  context: businessKnowledgeBase,",
+      "  guardrails: ['strict-schema', 'audit-log'],",
+      "});",
+    ],
   },
   {
+    id: "software",
     code: "02 / SOFTWARE",
     tag: "DESENVOLVIMENTO SOB MEDIDA",
     title: "Seu negócio não precisa se adaptar a qualquer software.",
     description:
-      "Arquitetura full stack e aplicações web e mobile desenhadas sob medida para os seus processos, regras de negócio e objetivos de escala.",
+      "Arquitetura full stack web e mobile desenhada sob medida para os seus processos, regras de negócio e objetivos reais de crescimento e conversão.",
     metrics: "Next.js · React · Flutter · Node.js",
-    icon: "code",
+    latency: "11.2 ms",
+    throughput: "99.98% uptime",
+    architectureNodes: [
+      "Design System OD",
+      "Edge SSR / App Mobile",
+      "Core Domain API",
+      "Cluster Multi-Região",
+    ],
+    snippet: [
+      "export async function deployCustomSystem(spec: DomainSpec) {",
+      "  const pipeline = createCleanArchitecture(spec);",
+      "  return pipeline.withZeroDowntime().ship();",
+      "}",
+    ],
   },
   {
+    id: "automation",
     code: "03 / AUTOMAÇÃO",
     tag: "AUTOMAÇÃO INTELIGENTE",
     title: "Menos tarefas repetitivas. Mais tempo para crescer.",
     description:
-      "Orquestração de fluxos inteligentes, atendimento automatizado e processos internos que operam 24/7 com precisão e rastreabilidade.",
-    metrics: "Workflows · Bots · Eficiência",
-    icon: "automation",
+      "Orquestração de fluxos inteligentes, atendimento automatizado e processos internos que operam 24/7 com precisão, logs auditáveis e zero atrito.",
+    metrics: "Workflows · Filas · Workers 24/7",
+    latency: "6.8 ms",
+    throughput: "-68% trabalho manual",
+    architectureNodes: [
+      "Gatilho de Evento",
+      "Fila Distribuída",
+      "Worker Inteligente",
+      "Notificação & CRM",
+    ],
+    snippet: [
+      "workflow.on('lead.received', async (event) => {",
+      "  const score = await ai.qualifyLead(event.payload);",
+      "  await crm.syncAndNotify({ lead: event.id, score });",
+      "});",
+    ],
   },
   {
+    id: "api",
     code: "04 / INTEGRAÇÕES",
     tag: "ECOSSISTEMA & APIS",
     title: "Seus sistemas podem trabalhar juntos.",
     description:
-      "Desenvolvimento de APIs de alta performance, webhooks, meios de pagamento (PIX/Stripe) e sincronização segura entre plataformas.",
-    metrics: "REST · GraphQL · Webhooks · Cloud",
-    icon: "api",
+      "Desenvolvimento de APIs de alta performance, webhooks, meios de pagamento (PIX, split, recorrência) e sincronização segura entre ERP, CRM e apps.",
+    metrics: "REST · GraphQL · Webhooks · PIX",
+    latency: "9.1 ms",
+    throughput: "12k req/s",
+    architectureNodes: [
+      "API Gateway",
+      "Auth & Rate Limit",
+      " Barramento de Eventos",
+      "ERP / PIX / Webhooks",
+    ],
+    snippet: [
+      "const payment = await mathix.bridge.execute({",
+      "  provider: 'pix-instant-settlement',",
+      "  idempotencyKey: tx.hash,",
+      "  webhookSync: ['erp', 'analytics'],",
+      "});",
+    ],
   },
 ];
 
@@ -79,41 +143,41 @@ const processSteps = [
   {
     step: "01",
     name: "Descoberta",
+    deliverable: "Diagnóstico & Mapa de Oportunidades",
     detail: "Imersão no desafio, diagnóstico de gargalos e definição de metas reais.",
   },
   {
     step: "02",
     name: "Planejamento",
-    detail: "Arquitetura de dados, escolha de modelos de IA e prototipação técnica.",
+    deliverable: "Blueprint de Arquitetura & Protótipo OD",
+    detail: "Arquitetura de dados, escolha de modelos de IA e especificação técnica.",
   },
   {
     step: "03",
     name: "Desenvolvimento",
+    deliverable: "Sprints Full Stack & Integrações",
     detail: "Código limpo, sprints ágeis, interfaces fluidas e integrações robustas.",
   },
   {
     step: "04",
     name: "Testes",
+    deliverable: "QA Automatizado & Stress Test",
     detail: "Validação automatizada, segurança, performance e calibração de IA.",
   },
   {
     step: "05",
     name: "Evolução",
+    deliverable: "Observabilidade & Escala Contínua",
     detail: "Deploy contínuo, telemetria em produção e escala orientada a dados.",
   },
 ];
 
-/*
- * PERSONALIZE SEUS PROJETOS AQUI:
- * Os links publicados, repositórios e previews reais ficam centralizados aqui.
- * Para adicionar outro projeto, duplique um item e coloque a captura em
- * /public/projects. Os botões e o card usam estes dados automaticamente.
- */
 const projects: Project[] = [
   {
     number: "01",
     title: "ClockHub",
     category: "Marketplace de relógios autênticos",
+    filterGroup: "saas",
     year: "2026",
     description:
       "Marketplace para compra e venda de relógios com foco em confiança, descoberta de modelos e uma experiência premium para clientes reais.",
@@ -121,11 +185,13 @@ const projects: Project[] = [
     liveUrl: "https://clockhub.com.br/",
     image: "/projects/clockhub-shot.png",
     imagePosition: "center top",
+    featured: true,
   },
   {
     number: "02",
     title: "BuyTicket Brasil",
     category: "Marketplace de ingressos · Migração",
+    filterGroup: "saas",
     year: "2026",
     description:
       "Colaboração na migração tecnológica do maior mercado secundário de ingressos do Brasil, garantindo alta disponibilidade, busca rápida e compra e revenda seguras para grandes eventos.",
@@ -134,11 +200,13 @@ const projects: Project[] = [
     statusLabel: "Colaboração na migração",
     image: "/projects/buyticket-shot.png",
     imagePosition: "center top",
+    featured: true,
   },
   {
     number: "03",
     title: "PAN — Apoio ao Neurodivergente",
     category: "App mobile & saúde multidisciplinar",
+    filterGroup: "mobile",
     year: "2026",
     description:
       "Aplicativo mobile para acompanhamento multidisciplinar de pessoas neurodivergentes, integrando prontuário, calendário de comportamentos, aderência medicamentosa e rede de cuidado entre família, escola e clínica.",
@@ -152,6 +220,7 @@ const projects: Project[] = [
     number: "04",
     title: "PRÓ Torneios",
     category: "Plataforma de torneios esportivos",
+    filterGroup: "saas",
     year: "2026",
     description:
       "Plataforma completa para organização de torneios de beach tennis, tênis, futevôlei e padel, com inscrições via PIX, chaves automáticas, placar ao vivo e perfil de atletas.",
@@ -164,6 +233,7 @@ const projects: Project[] = [
     number: "05",
     title: "MinasXtreme",
     category: "Gestão de campeonatos de motocross",
+    filterGroup: "saas",
     year: "2026",
     description:
       "Plataforma para inscrições, pagamentos, vistoria e acompanhamento de resultados em campeonatos de motocross, desenvolvida para um cliente real.",
@@ -176,6 +246,7 @@ const projects: Project[] = [
     number: "06",
     title: "DDA Delivery",
     category: "Delivery & e-commerce",
+    filterGroup: "apps",
     year: "2026",
     description:
       "Aplicação de delivery responsiva com catálogo por categorias, busca de produtos e uma jornada de compra pensada para dispositivos móveis.",
@@ -189,6 +260,7 @@ const projects: Project[] = [
     number: "07",
     title: "StockFlow",
     category: "Gestão de estoque & vendas",
+    filterGroup: "saas",
     year: "2026",
     description:
       "Plataforma full stack multi-loja para controle de inventário e vendas, com isolamento por vendedor, histórico e operação em nuvem.",
@@ -201,6 +273,7 @@ const projects: Project[] = [
     number: "08",
     title: "Monte seu PC",
     category: "Jogo educacional interativo",
+    filterGroup: "apps",
     year: "2026",
     description:
       "Experiência gamificada de hardware em que o usuário monta um computador arrastando cada componente para o lugar correto.",
@@ -214,6 +287,7 @@ const projects: Project[] = [
     number: "09",
     title: "Barber App",
     category: "Agendamento via WhatsApp",
+    filterGroup: "apps",
     year: "2026",
     description:
       "Aplicação para barbearias com entrada simplificada por telefone e uma experiência elegante para conectar clientes ao atendimento.",
@@ -310,17 +384,14 @@ function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
           <stop offset="100%" stopColor="#0B5ED7" />
         </linearGradient>
       </defs>
-      {/* Left half in Ice White: vertical stem + diagonal chevron */}
       <path
         d="M16 96V16L60 54L74 41.5V62.5L60 75L34 52V96H16Z"
         fill="#F4F7FB"
       />
-      {/* Right upper diagonal in Electric Blue */}
       <path
         d="M64 38L104 4V25.5L64 59.5V38Z"
         fill="url(#mathixElectricGrad)"
       />
-      {/* Right vertical stem in Electric Blue */}
       <path
         d="M86 45.5L104 30V96H86V45.5Z"
         fill="url(#mathixElectricGrad)"
@@ -329,45 +400,13 @@ function MathixMonogram({ className = "mathix-mark" }: { className?: string }) {
   );
 }
 
-function SolutionIcon({ type }: { type: SolutionPillar["icon"] }) {
-  if (type === "ai") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <path d="M12 3a4 4 0 0 0-4 4v1a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3v1a4 4 0 0 0 8 0v-1a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3V7a4 4 0 0 0-4-4Z" />
-        <path d="M12 3v18M8 9h8M8 15h8" />
-      </svg>
-    );
-  }
-  if (type === "code") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <polyline points="8 7 3 12 8 17" />
-        <polyline points="16 7 21 12 16 17" />
-        <line x1="14" y1="4" x2="10" y2="20" />
-      </svg>
-    );
-  }
-  if (type === "automation") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <polygon points="12 2 2 7 12 12 22 7 12 2" />
-        <polyline points="2 17 12 22 22 17" />
-        <polyline points="2 12 12 17 22 12" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="6" cy="6" r="3" />
-      <circle cx="18" cy="6" r="3" />
-      <circle cx="12" cy="18" r="3" />
-      <path d="M8.7 7.5 15.3 7.5M7.5 8.6l3.2 6.8M16.5 8.6l-3.2 6.8" />
-    </svg>
-  );
-}
-
-function NeuralNetworkCanvas() {
+function NeuralNetworkCanvas({ pulseBoost }: { pulseBoost: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const boostRef = useRef(0);
+
+  useEffect(() => {
+    boostRef.current = 1;
+  }, [pulseBoost]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -376,20 +415,20 @@ function NeuralNetworkCanvas() {
     if (!ctx) return;
 
     let animationFrameId = 0;
-    let width = (canvas.width = canvas.offsetWidth || 500);
-    let height = (canvas.height = canvas.offsetHeight || 500);
+    let width = (canvas.width = canvas.offsetWidth || 520);
+    let height = (canvas.height = canvas.offsetHeight || 520);
 
     const pointer = { x: width / 2, y: height / 2, active: false };
 
-    const nodeCount = 34;
+    const nodeCount = 36;
     const nodes = Array.from({ length: nodeCount }, (_, i) => {
       const angle = (i / nodeCount) * Math.PI * 2;
-      const radius = 60 + (i % 4) * 45;
+      const radius = 56 + (i % 4) * 44;
       return {
         x: width / 2 + Math.cos(angle) * radius,
         y: height / 2 + Math.sin(angle) * radius,
-        vx: (Math.random() - 0.5) * 0.65,
-        vy: (Math.random() - 0.5) * 0.65,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
         r: i % 5 === 0 ? 3.2 : 2,
         pulse: Math.random() * Math.PI * 2,
       };
@@ -397,8 +436,8 @@ function NeuralNetworkCanvas() {
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = canvas.offsetWidth || 500;
-      height = canvas.height = canvas.offsetHeight || 500;
+      width = canvas.width = canvas.offsetWidth || 520;
+      height = canvas.height = canvas.offsetHeight || 520;
     };
 
     const handleMove = (e: PointerEvent) => {
@@ -417,14 +456,16 @@ function NeuralNetworkCanvas() {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+      const speedMult = 1 + boostRef.current * 2.4;
+      boostRef.current *= 0.96;
 
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
-        n.pulse += 0.035;
-        n.x += n.vx;
-        n.y += n.vy;
+        n.pulse += 0.035 * speedMult;
+        n.x += n.vx * speedMult;
+        n.y += n.vy * speedMult;
 
-        const margin = 28;
+        const margin = 26;
         if (n.x < margin || n.x > width - margin) n.vx *= -1;
         if (n.y < margin || n.y > height - margin) n.vy *= -1;
 
@@ -432,7 +473,7 @@ function NeuralNetworkCanvas() {
           const dx = pointer.x - n.x;
           const dy = pointer.y - n.y;
           const dist = Math.hypot(dx, dy);
-          if (dist < 150 && dist > 1) {
+          if (dist < 155 && dist > 1) {
             n.x += (dx / dist) * 0.55;
             n.y += (dy / dist) * 0.55;
           }
@@ -443,22 +484,22 @@ function NeuralNetworkCanvas() {
           const dx = n.x - m.x;
           const dy = n.y - m.y;
           const dist = Math.hypot(dx, dy);
-          if (dist < 128) {
-            const alpha = (1 - dist / 128) * 0.42;
-            ctx.strokeStyle = `rgba(22, 130, 255, ${alpha.toFixed(3)})`;
+          if (dist < 130) {
+            const alpha = (1 - dist / 130) * (0.42 + boostRef.current * 0.35);
+            ctx.strokeStyle = `rgba(22, 130, 255, ${Math.min(0.9, alpha).toFixed(3)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(m.x, m.y);
             ctx.stroke();
 
-            if ((i + j) % 7 === 0) {
-              const t = (Math.sin(n.pulse * 0.8 + i) + 1) * 0.5;
+            if ((i + j) % 6 === 0) {
+              const t = (Math.sin(n.pulse * 0.85 + i) + 1) * 0.5;
               const px = n.x + (m.x - n.x) * t;
               const py = n.y + (m.y - n.y) * t;
-              ctx.fillStyle = "rgba(244, 247, 251, 0.85)";
+              ctx.fillStyle = "rgba(244, 247, 251, 0.9)";
               ctx.beginPath();
-              ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+              ctx.arc(px, py, 1.6, 0, Math.PI * 2);
               ctx.fill();
             }
           }
@@ -493,8 +534,8 @@ function handleSpotlightMove(event: React.PointerEvent<HTMLElement>) {
   const y = event.clientY - rect.top;
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
-  const tiltX = ((y - centerY) / centerY) * -5.5;
-  const tiltY = ((x - centerX) / centerX) * 5.5;
+  const tiltX = ((y - centerY) / centerY) * -4.2;
+  const tiltY = ((x - centerX) / centerX) * 4.2;
 
   el.style.setProperty("--mouse-x", `${x}px`);
   el.style.setProperty("--mouse-y", `${y}px`);
@@ -513,7 +554,7 @@ function handleMagneticMove(event: React.PointerEvent<HTMLElement>) {
   const rect = el.getBoundingClientRect();
   const x = event.clientX - (rect.left + rect.width / 2);
   const y = event.clientY - (rect.top + rect.height / 2);
-  el.style.transform = `translate3d(${x * 0.24}px, ${y * 0.24}px, 0)`;
+  el.style.transform = `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
 }
 
 function handleMagneticLeave(event: React.PointerEvent<HTMLElement>) {
@@ -526,8 +567,8 @@ function handleArtMove(event: React.PointerEvent<HTMLElement>) {
   const rect = el.getBoundingClientRect();
   const x = (event.clientX - rect.left) / rect.width - 0.5;
   const y = (event.clientY - rect.top) / rect.height - 0.5;
-  el.style.setProperty("--art-tilt-x", `${(-y * 22).toFixed(2)}deg`);
-  el.style.setProperty("--art-tilt-y", `${(x * 22).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-x", `${(-y * 18).toFixed(2)}deg`);
+  el.style.setProperty("--art-tilt-y", `${(x * 18).toFixed(2)}deg`);
 }
 
 function handleArtLeave(event: React.PointerEvent<HTMLElement>) {
@@ -536,7 +577,13 @@ function handleArtLeave(event: React.PointerEvent<HTMLElement>) {
   el.style.setProperty("--art-tilt-y", "0deg");
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({
+  project,
+  isDimmed,
+}: {
+  project: Project;
+  isDimmed: boolean;
+}) {
   const hostLabel =
     project.previewHost ??
     (project.liveUrl ? new URL(project.liveUrl).hostname : "preview");
@@ -544,9 +591,15 @@ function ProjectCard({ project }: { project: Project }) {
   const visualContent = (
     <>
       <div className="project-browser" aria-hidden="true">
-        <span>● ● ●</span>
-        <span>{hostLabel}</span>
-        <span>{project.liveUrl ? "↗" : "●"}</span>
+        <span className="browser-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="browser-host">{hostLabel}</span>
+        <span className="browser-status">
+          {project.liveUrl ? "LIVE ↗" : "DEV ●"}
+        </span>
       </div>
       <img
         src={project.image}
@@ -567,70 +620,76 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <article
-      className="project reveal spotlight-card"
+      className={`project reveal bezel-shell spotlight-card ${
+        project.featured ? "project-featured" : ""
+      } ${isDimmed ? "project-dimmed" : ""}`}
       onPointerMove={handleSpotlightMove}
       onPointerLeave={handleSpotlightLeave}
     >
-      {project.liveUrl ? (
-        <a
-          className="project-visual"
-          href={project.liveUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Abrir ${project.title}`}
-        >
-          {visualContent}
-        </a>
-      ) : (
-        <div
-          className="project-visual project-visual-static"
-          aria-label={`Preview de ${project.title}`}
-        >
-          {visualContent}
-        </div>
-      )}
-      <div className="project-body">
-        <div className="project-caption">
-          <span className="eyebrow">{project.category}</span>
-          <span className="project-number">/{project.number}</span>
-        </div>
-        <h3>
-          {project.liveUrl ? (
-            <a href={project.liveUrl} target="_blank" rel="noreferrer">
-              {project.title}
-              <Arrow />
-            </a>
-          ) : (
-            <span className="project-title-static">
-              <span>{project.title}</span>
-              {project.statusLabel && (
-                <span className="project-status-pill">{project.statusLabel}</span>
-              )}
-            </span>
-          )}
-        </h3>
-        <p>{project.description}</p>
-        <div className="project-meta">
-          <div className="tags">
-            {project.tags.map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
+      <div className="bezel-core project-core">
+        {project.liveUrl ? (
+          <a
+            className="project-visual"
+            href={project.liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Abrir ${project.title}`}
+          >
+            {visualContent}
+          </a>
+        ) : (
+          <div
+            className="project-visual project-visual-static"
+            aria-label={`Preview de ${project.title}`}
+          >
+            {visualContent}
           </div>
-          {project.githubUrl ? (
-            <a
-              className="code-link"
-              href={project.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Código de ${project.title}`}
-            >
-              Código <Arrow />
-            </a>
-          ) : (
-            project.statusLabel && (
-              <span className="code-link status-note">{project.statusLabel}</span>
-            )
-          )}
+        )}
+        <div className="project-body">
+          <div className="project-caption">
+            <span className="eyebrow">{project.category}</span>
+            <span className="project-number">/{project.number}</span>
+          </div>
+          <h3>
+            {project.liveUrl ? (
+              <a href={project.liveUrl} target="_blank" rel="noreferrer">
+                <span>{project.title}</span>
+                <span className="inline-island-icon">
+                  <Arrow />
+                </span>
+              </a>
+            ) : (
+              <span className="project-title-static">
+                <span>{project.title}</span>
+                {project.statusLabel && (
+                  <span className="project-status-pill">{project.statusLabel}</span>
+                )}
+              </span>
+            )}
+          </h3>
+          <p>{project.description}</p>
+          <div className="project-meta">
+            <div className="tags">
+              {project.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+            {project.githubUrl ? (
+              <a
+                className="code-link"
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Código de ${project.title}`}
+              >
+                Código <Arrow />
+              </a>
+            ) : (
+              project.statusLabel && (
+                <span className="code-link status-note">{project.statusLabel}</span>
+              )
+            )}
+          </div>
         </div>
       </div>
     </article>
@@ -640,7 +699,13 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeBlueprint, setActiveBlueprint] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [projectFilter, setProjectFilter] = useState<
+    "all" | "saas" | "mobile" | "apps"
+  >("all");
+  const [pulseBoost, setPulseBoost] = useState(0);
+  const [simulatingNode, setSimulatingNode] = useState<number | null>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem("lmp-theme");
@@ -656,10 +721,23 @@ export default function Home() {
     window.localStorage.setItem("lmp-theme", next);
   };
 
+  const triggerBlueprintSimulation = () => {
+    setPulseBoost((prev) => prev + 1);
+    setSimulatingNode(0);
+    [1, 2, 3].forEach((stepIndex) => {
+      window.setTimeout(() => {
+        setSimulatingNode(stepIndex);
+      }, stepIndex * 320);
+    });
+    window.setTimeout(() => {
+      setSimulatingNode(null);
+    }, 1500);
+  };
+
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveStep((prev) => (prev + 1) % processSteps.length);
-    }, 2800);
+    }, 3200);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -703,8 +781,10 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  const currentBlueprint = blueprints[activeBlueprint];
+
   return (
-    <main id="top">
+    <main id="top" className="od-workspace">
       <div className="cyber-grid-bg" aria-hidden="true" />
       <div className="ambient-glow glow-one" aria-hidden="true" />
       <div className="ambient-glow glow-two" aria-hidden="true" />
@@ -714,69 +794,82 @@ export default function Home() {
         Pular para projetos
       </a>
 
-      <header className="site-header">
-        <div
-          className="scroll-progress-line"
-          style={{ transform: `scaleX(${scrollProgress / 100})` }}
-          aria-hidden="true"
-        />
-        <a
-          className="logo brand-logo"
-          href="#top"
-          aria-label="Mathix Labs — Lucas Mathias Paixão, início"
-        >
-          <MathixMonogram className="header-monogram" />
-          <span className="brand-wordmark">
-            <strong>MATHIX</strong>
-            <small>LABS</small>
-          </span>
-        </a>
-        <nav aria-label="Navegação principal">
-          <a href="#solucoes">Soluções</a>
-          <a href="#projetos">
-            Projetos <sup>09</sup>
-          </a>
-          <a href="#experiencia">Experiência</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#contato">
-            Contato <Arrow />
-          </a>
-        </nav>
-        <div className="header-actions">
-          <button
-            type="button"
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
-            }
-            title={theme === "dark" ? "Mudar para modo claro" : "Mudar para modo escuro"}
+      {/* OPEN DESIGN FLUID ISLAND NAVBAR */}
+      <div className="island-header-wrap">
+        <header className="site-header island-header">
+          <div
+            className="scroll-progress-line"
+            style={{ transform: `scaleX(${scrollProgress / 100})` }}
+            aria-hidden="true"
+          />
+          <a
+            className="logo brand-logo"
+            href="#top"
+            aria-label="Mathix Labs — Lucas Mathias Paixão, início"
           >
-            <span className="theme-icon" aria-hidden="true">
-              {theme === "dark" ? "☀" : "☾"}
+            <MathixMonogram className="header-monogram" />
+            <span className="brand-wordmark">
+              <strong>MATHIX</strong>
+              <small>LABS</small>
             </span>
-            <span>{theme === "dark" ? "Modo claro" : "Modo escuro"}</span>
-          </button>
-          <a className="availability" href="#contato">
-            <i />
-            Vamos construir algo inteligente?
           </a>
-        </div>
-      </header>
+          <nav aria-label="Navegação principal">
+            <a href="#solucoes">Soluções</a>
+            <a href="#projetos">
+              Projetos <sup>09</sup>
+            </a>
+            <a href="#experiencia">Experiência</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato">
+              Contato <Arrow />
+            </a>
+          </nav>
+          <div className="header-actions">
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={
+                theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
+              }
+              title={
+                theme === "dark" ? "Mudar para modo claro" : "Mudar para modo escuro"
+              }
+            >
+              <span className="theme-icon" aria-hidden="true">
+                {theme === "dark" ? "☀" : "☾"}
+              </span>
+              <span>{theme === "dark" ? "Claro" : "Escuro"}</span>
+            </button>
+            <a className="availability island-cta-mini" href="#contato">
+              <i />
+              <span>Construir projeto</span>
+              <span className="mini-island-circle" aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          </div>
+        </header>
+      </div>
 
+      {/* HERO — EDITORIAL SPLIT + DOUBLE-BEZEL 3D CORE */}
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-kicker">
-          <span>MATHIX LABS // AI &amp; SOFTWARE ENGINEERING ⚡</span>
-          <span>ENGINEERING INTELLIGENCE. ↗</span>
+          <span className="kicker-badge">
+            <i>◈</i> MATHIX LABS // AI &amp; SOFTWARE ENGINEERING
+          </span>
+          <span>OPEN DESIGN SYSTEM · SÃO PAULO, BR ↗</span>
         </div>
+
         <div className="hero-content">
-          <div className="hero-copy">
+          <div className="hero-copy od-stack">
             <div className="intro-pill">
               <span className="intro-dot" aria-hidden="true" />
               <p className="intro">
                 Lucas Mathias Paixão · AI Engineer &amp; Founder @ Mathix Labs · MVP Builders
               </p>
             </div>
+
             <h1 id="hero-title">
               Engineering
               <br />
@@ -784,12 +877,14 @@ export default function Home() {
               <br />
               <em>Software &amp; IA.</em>
             </h1>
+
             <p className="hero-description">
               Desenvolvemos soluções inteligentes em software, IA e sistemas para
-              um futuro mais eficiente. Tecnologia com propósito, qualidade e
-              resultados reais.
+              um futuro mais eficiente. Arquitetura sob medida, automação de
+              processos e produtos digitais construídos para escalar.
             </p>
-            <div className="hero-pillars" aria-label="Pilares da Mathix Labs">
+
+            <div className="hero-pillars od-cluster" aria-label="Pilares da Mathix Labs">
               <span>
                 <i>◈</i> Desenvolvimento sob medida
               </span>
@@ -800,78 +895,98 @@ export default function Home() {
                 <i>◈</i> Automação e integrações
               </span>
             </div>
-            <div className="hero-actions">
+
+            <div className="hero-actions od-cluster">
               <a
-                className="button"
+                className="button island-button"
                 href="#projetos"
                 onPointerMove={handleMagneticMove}
                 onPointerLeave={handleMagneticLeave}
               >
-                Explorar projetos <Arrow />
+                <span>Explorar projetos</span>
+                <span className="btn-island-icon">
+                  <Arrow />
+                </span>
               </a>
               <a
-                className="button button-secondary"
+                className="button button-secondary island-button"
                 href="#solucoes"
                 onPointerMove={handleMagneticMove}
                 onPointerLeave={handleMagneticLeave}
               >
-                Nossas soluções
+                <span>Arquitetura &amp; IA</span>
+                <span className="btn-island-icon">⚡</span>
               </a>
               <a className="text-link" href="#contato">
-                Construir algo inteligente <span>↘</span>
+                Vamos construir algo inteligente? <span>↘</span>
               </a>
             </div>
           </div>
 
+          {/* DOUBLE-BEZEL 3D HARDWARE CORE */}
           <div
-            className="hero-art"
-            aria-hidden="true"
+            className="hero-art-shell bezel-shell"
             onPointerMove={handleArtMove}
             onPointerLeave={handleArtLeave}
           >
-            <NeuralNetworkCanvas />
-            <div className="art-coordinate">
-              <span>MATHIX LABS // CORE V2.6</span>
-              <span>ONLINE · 99.9%</span>
-            </div>
-            <div className="orbital">
-              <div className="orbit orbit-one" />
-              <div className="orbit orbit-two" />
-              <div className="orbit orbit-three" />
-              <div className="orbit orbit-four" />
-              <span className="satellite" />
-              <span className="satellite satellite-two" />
-              <span className="satellite satellite-three" />
-            </div>
-            <div className="orb-core-monogram">
-              <div className="monogram-halo" />
-              <MathixMonogram className="hero-monogram-svg" />
-              <span className="monogram-caption">MATHIX LABS</span>
-              <span className="monogram-sub">ENGINEERING INTELLIGENCE.</span>
-            </div>
-            <div className="hud-floating hud-top-right">
-              <span className="hud-dot" />
-              <span>IA · SOFTWARE · AUTOMAÇÃO</span>
-            </div>
-            <div className="hud-floating hud-bottom-left">
-              <span>DESCOBERTA → EVOLUÇÃO</span>
-            </div>
-            <span className="art-cross cross-one">+</span>
-            <span className="art-cross cross-two">+</span>
-            <div className="art-label">
-              <span>
-                SISTEMAS INTELIGENTES.
-                <br />
-                RESULTADOS REAIS.
-              </span>
-              <span className="art-symbol">↗</span>
+            <div className="hero-art bezel-core" aria-hidden="true">
+              <NeuralNetworkCanvas pulseBoost={pulseBoost} />
+              <div className="art-coordinate">
+                <span>OD // MATHIX CORE V3.0</span>
+                <span className="live-telemetry">● TELEMETRIA ATIVA · 99.98%</span>
+              </div>
+
+              <div className="orbital">
+                <div className="orbit orbit-one" />
+                <div className="orbit orbit-two" />
+                <div className="orbit orbit-three" />
+                <div className="orbit orbit-four" />
+                <span className="satellite" />
+                <span className="satellite satellite-two" />
+                <span className="satellite satellite-three" />
+              </div>
+
+              <div className="orb-core-monogram">
+                <div className="monogram-halo" />
+                <MathixMonogram className="hero-monogram-svg" />
+                <span className="monogram-caption">MATHIX LABS</span>
+                <span className="monogram-sub">ENGINEERING INTELLIGENCE.</span>
+              </div>
+
+              <div className="hud-floating hud-top-right">
+                <span className="hud-dot" />
+                <span>IA · SOFTWARE · AUTOMAÇÃO</span>
+              </div>
+
+              <div className="hud-floating hud-bottom-left">
+                <span>LATÊNCIA: 14.2ms · CLOUD READY</span>
+              </div>
+
+              <button
+                type="button"
+                className="core-pulse-trigger"
+                onClick={() => setPulseBoost((p) => p + 1)}
+                tabIndex={-1}
+              >
+                ⚡ Disparar pulso neural
+              </button>
+
+              <div className="art-label">
+                <span>
+                  SISTEMAS INTELIGENTES.
+                  <br />
+                  RESULTADOS REAIS.
+                </span>
+                <span className="art-symbol">↗</span>
+              </div>
             </div>
           </div>
         </div>
+
         <div className="hero-foot">
           <a href="#solucoes">
             <span className="scroll-line" />
-            ROLE PARA DESCOBRIR
+            ROLE PARA EXPLORAR A ARQUITETURA
           </a>
           <span>IDEIAS INTELIGENTES. SOFTWARE REAL. ENGENHARIA COM PROPÓSITO.</span>
           <span>MATHIX LABS — 2026</span>
@@ -884,16 +999,17 @@ export default function Home() {
             <span key={n}>
               MATHIX LABS <i>◈</i> ENGINEERING INTELLIGENCE <i>◈</i> DESENVOLVIMENTO
               SOB MEDIDA <i>◈</i> INTELIGÊNCIA ARTIFICIAL <i>◈</i> AUTOMAÇÃO &amp;
-              INTEGRAÇÕES <i>◈</i> SISTEMAS ESCALÁVEIS <i>◈</i>{" "}
+              INTEGRAÇÕES <i>◈</i> ARQUITETURA ESCALÁVEL <i>◈</i>{" "}
             </span>
           ))}
         </div>
       </div>
 
+      {/* ASYMMETRICAL BENTO SOLUTIONS & INTERACTIVE CONSOLE */}
       <section className="solutions-section" id="solucoes">
         <div className="section-title reveal">
           <div>
-            <span className="eyebrow">00 / SOLUÇÕES &amp; ENGENHARIA</span>
+            <span className="eyebrow">00 / ECOSSISTEMA MATHIX LABS</span>
             <h2>
               Ideias inteligentes.
               <br />
@@ -903,74 +1019,195 @@ export default function Home() {
           <div className="section-aside">
             <span className="small-star">◈</span>
             <p>
-              Somos a Mathix Labs, dedicada a transformar
+              Engenharia de software e Inteligência Artificial
               <br />
-              desafios complexos em soluções digitais sob medida.
+              desenhadas para resolver problemas reais de negócio.
             </p>
-            <span className="eyebrow">IA · SOFTWARE · SISTEMAS · AUTOMAÇÃO</span>
+            <span className="eyebrow">ARQUITETURA BENTO // OPEN DESIGN</span>
           </div>
         </div>
 
-        <div className="solutions-grid">
-          {solutions.map((item) => (
+        <div className="bento-solutions-grid">
+          {/* ASYMMETRICAL BENTO SPAN 7: INTERACTIVE ARCHITECTURE CONSOLE */}
+          <div
+            className="bento-console bezel-shell reveal spotlight-card"
+            onPointerMove={handleSpotlightMove}
+            onPointerLeave={handleSpotlightLeave}
+          >
+            <div className="bezel-core console-core">
+              <div className="console-topbar">
+                <div className="console-dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <span>mathix-labs://architecture-console</span>
+                </div>
+                <button
+                  type="button"
+                  className="console-run-btn"
+                  onClick={triggerBlueprintSimulation}
+                >
+                  <span>⚡ Simular pipeline</span>
+                </button>
+              </div>
+
+              <div className="console-tabs" role="tablist" aria-label="Pilares de engenharia">
+                {blueprints.map((bp, idx) => (
+                  <button
+                    key={bp.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeBlueprint === idx}
+                    className={`console-tab ${activeBlueprint === idx ? "is-active" : ""}`}
+                    onClick={() => setActiveBlueprint(idx)}
+                  >
+                    <span className="tab-num">0{idx + 1}</span>
+                    <span>{bp.tag}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="console-body">
+                <div className="console-info">
+                  <span className="solution-tag">{currentBlueprint.code}</span>
+                  <h3>{currentBlueprint.title}</h3>
+                  <p>{currentBlueprint.description}</p>
+
+                  <div className="architecture-flow">
+                    {currentBlueprint.architectureNodes.map((node, i) => (
+                      <div
+                        key={node}
+                        className={`arch-node ${
+                          simulatingNode === i ? "is-pulsing" : ""
+                        }`}
+                      >
+                        <span className="arch-index">0{i + 1}</span>
+                        <span className="arch-name">{node}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="console-code-box">
+                  <div className="code-box-head">
+                    <span>BLUEPRINT.TS</span>
+                    <span>{currentBlueprint.latency} · {currentBlueprint.throughput}</span>
+                  </div>
+                  <pre>
+                    <code>
+                      {currentBlueprint.snippet.map((line, i) => (
+                        <span key={i} className="code-line">
+                          <small>{i + 1}</small>
+                          {line}
+                        </span>
+                      ))}
+                    </code>
+                  </pre>
+                  <div className="code-box-foot">
+                    <span>STACK: {currentBlueprint.metrics}</span>
+                    <span className="status-ready">● PRONTO PARA PRODUÇÃO</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ASYMMETRICAL BENTO SPAN 5: 2X2 PILLAR MATRIX + METRICS */}
+          <div className="bento-side-stack">
+            <div className="bento-mini-grid">
+              {blueprints.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className={`bezel-shell bento-pillar-shell reveal spotlight-card ${
+                    activeBlueprint === idx ? "is-selected" : ""
+                  }`}
+                  onClick={() => setActiveBlueprint(idx)}
+                  onPointerMove={handleSpotlightMove}
+                  onPointerLeave={handleSpotlightLeave}
+                >
+                  <div className="bezel-core bento-pillar-core">
+                    <div className="pillar-head">
+                      <span className="eyebrow">{item.code}</span>
+                      <span className="pillar-arrow">↗</span>
+                    </div>
+                    <h4>{item.tag}</h4>
+                    <p>{item.metrics}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div
-              key={item.code}
-              className="solution-card reveal spotlight-card"
+              className="bezel-shell bento-telemetry-shell reveal spotlight-card"
               onPointerMove={handleSpotlightMove}
               onPointerLeave={handleSpotlightLeave}
             >
-              <div className="solution-card-top">
-                <span className="solution-tag">{item.tag}</span>
-                <div className="solution-icon" aria-hidden="true">
-                  <SolutionIcon type={item.icon} />
+              <div className="bezel-core bento-telemetry-core">
+                <div className="telemetry-header">
+                  <span className="eyebrow">MÉTRICAS DE ENGENHARIA // 2026</span>
+                  <span className="telemetry-badge">PRODUÇÃO REAL</span>
+                </div>
+                <div className="telemetry-stats">
+                  <div className="od-stat">
+                    <strong>09+</strong>
+                    <span>Sistemas &amp; produtos publicados</span>
+                  </div>
+                  <div className="od-stat">
+                    <strong>-68%</strong>
+                    <span>Redução em rotinas operacionais</span>
+                  </div>
+                  <div className="od-stat">
+                    <strong>99.9%</strong>
+                    <span>Disponibilidade em arquiteturas cloud</span>
+                  </div>
                 </div>
               </div>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <div className="solution-card-foot">
-                <span className="eyebrow">{item.code}</span>
-                <span className="solution-metrics">{item.metrics}</span>
-              </div>
             </div>
-          ))}
+          </div>
         </div>
 
+        {/* DOUBLE-BEZEL 5-STAGE PROCESS PIPELINE */}
         <div
-          className="process-banner reveal spotlight-card"
+          className="process-banner bezel-shell reveal spotlight-card"
           onPointerMove={handleSpotlightMove}
           onPointerLeave={handleSpotlightLeave}
         >
-          <div className="process-header">
-            <div>
-              <span className="eyebrow">NOSSO PROCESSO // MÉTODO &amp; PRECISÃO</span>
-              <h3>
-                Do problema à <em>solução.</em>
-              </h3>
-            </div>
-            <p>
-              Tecnologia com propósito, qualidade e engenharia ponta a ponta em 5
-              etapas conectadas.
-            </p>
-          </div>
-          <div className="process-track">
-            {processSteps.map((s, idx) => (
-              <div
-                key={s.step}
-                className={`process-step ${idx === activeStep ? "is-active" : ""}`}
-                onPointerEnter={() => setActiveStep(idx)}
-              >
-                <div className="process-step-head">
-                  <span className="process-num">{s.step}</span>
-                  <span className="process-connector" aria-hidden="true" />
-                </div>
-                <h4>{s.name}</h4>
-                <p>{s.detail}</p>
+          <div className="bezel-core process-core">
+            <div className="process-header">
+              <div>
+                <span className="eyebrow">NOSSO PROCESSO // MÉTODO &amp; PRECISÃO</span>
+                <h3>
+                  Do problema à <em>solução.</em>
+                </h3>
               </div>
-            ))}
+              <p>
+                Engenharia ponta a ponta: cada etapa entrega artefatos claros,
+                auditáveis e orientados a resultado.
+              </p>
+            </div>
+            <div className="process-track">
+              {processSteps.map((s, idx) => (
+                <div
+                  key={s.step}
+                  className={`process-step ${idx === activeStep ? "is-active" : ""}`}
+                  onPointerEnter={() => setActiveStep(idx)}
+                  onClick={() => setActiveStep(idx)}
+                >
+                  <div className="process-step-head">
+                    <span className="process-num">{s.step}</span>
+                    <span className="process-connector" aria-hidden="true" />
+                  </div>
+                  <h4>{s.name}</h4>
+                  <p>{s.detail}</p>
+                  <span className="process-deliverable">{s.deliverable}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
+      {/* PROJECTS SECTION — DOUBLE-BEZEL HARDWARE CARDS + INTERACTIVE FILTER */}
       <section className="projects-section" id="projetos">
         <div className="section-title reveal">
           <div>
@@ -982,21 +1219,54 @@ export default function Home() {
             </h2>
           </div>
           <div className="section-aside">
-            <span className="small-star">◈</span>
-            <p>
-              Produtos em produção, arquiteturas escaláveis
-              <br />e interfaces desenhadas para alta conversão.
-            </p>
+            <div className="project-filters" role="group" aria-label="Filtrar projetos">
+              <button
+                type="button"
+                className={`filter-pill ${projectFilter === "all" ? "is-active" : ""}`}
+                onClick={() => setProjectFilter("all")}
+              >
+                Todos <span>09</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-pill ${projectFilter === "saas" ? "is-active" : ""}`}
+                onClick={() => setProjectFilter("saas")}
+              >
+                Marketplaces &amp; SaaS <span>05</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-pill ${projectFilter === "mobile" ? "is-active" : ""}`}
+                onClick={() => setProjectFilter("mobile")}
+              >
+                Mobile &amp; Saúde <span>01</span>
+              </button>
+              <button
+                type="button"
+                className={`filter-pill ${projectFilter === "apps" ? "is-active" : ""}`}
+                onClick={() => setProjectFilter("apps")}
+              >
+                E-commerce &amp; Apps <span>03</span>
+              </button>
+            </div>
             <span className="eyebrow">2026 — SELEÇÃO DE PROJETOS (09)</span>
           </div>
         </div>
+
         <div className="projects-list">
           {projects.map((project) => (
-            <ProjectCard key={project.number} project={project} />
+            <ProjectCard
+              key={project.number}
+              project={project}
+              isDimmed={
+                projectFilter !== "all" && project.filterGroup !== projectFilter
+              }
+            />
           ))}
         </div>
       </section>
 
+      {/* EXPERIENCE SECTION — DOUBLE-BEZEL BENTO */}
       <section className="experience-section" id="experiencia">
         <div className="section-title reveal">
           <div>
@@ -1022,48 +1292,50 @@ export default function Home() {
           {experiences.map((exp) => (
             <div
               key={`${exp.company}-${exp.role}`}
-              className="experience-card reveal spotlight-card"
+              className="experience-card bezel-shell reveal spotlight-card"
               onPointerMove={handleSpotlightMove}
               onPointerLeave={handleSpotlightLeave}
             >
-              <div className="experience-header">
-                <div className="experience-brand">
-                  <div className="company-logo" aria-hidden="true">
-                    {exp.company === "Mathix Labs" ? (
-                      <MathixMonogram className="exp-monogram" />
-                    ) : (
-                      <span>◈</span>
-                    )}
-                  </div>
-                  <div>
-                    <div className="experience-status">
-                      <span className="status-dot" />
-                      <span>ATUALMENTE</span>
+              <div className="bezel-core experience-core">
+                <div className="experience-header">
+                  <div className="experience-brand">
+                    <div className="company-logo" aria-hidden="true">
+                      {exp.company === "Mathix Labs" ? (
+                        <MathixMonogram className="exp-monogram" />
+                      ) : (
+                        <span>◈</span>
+                      )}
                     </div>
-                    <h3>{exp.role}</h3>
-                    <p className="experience-company">
-                      <strong>{exp.company}</strong> · {exp.type}
-                    </p>
+                    <div>
+                      <div className="experience-status">
+                        <span className="status-dot" />
+                        <span>ATUALMENTE</span>
+                      </div>
+                      <h3>{exp.role}</h3>
+                      <p className="experience-company">
+                        <strong>{exp.company}</strong> · {exp.type}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="experience-meta-badges">
+                    <span className="exp-badge">{exp.period}</span>
+                    <span className="exp-badge exp-badge-outline">{exp.location}</span>
                   </div>
                 </div>
-                <div className="experience-meta-badges">
-                  <span className="exp-badge">{exp.period}</span>
-                  <span className="exp-badge exp-badge-outline">{exp.location}</span>
-                </div>
-              </div>
 
-              <div className="experience-body">
-                {exp.paragraphs.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-
-              <div className="experience-footer">
-                <span className="eyebrow">COMPETÊNCIAS EM DESTAQUE</span>
-                <div className="tags">
-                  {exp.skills.map((skill) => (
-                    <span key={skill}>{skill}</span>
+                <div className="experience-body">
+                  {exp.paragraphs.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
                   ))}
+                </div>
+
+                <div className="experience-footer">
+                  <span className="eyebrow">COMPETÊNCIAS EM DESTAQUE</span>
+                  <div className="tags">
+                    {exp.skills.map((skill) => (
+                      <span key={skill}>{skill}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1071,6 +1343,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT / FOUNDER SECTION */}
       <section className="about" id="sobre">
         <div className="about-top reveal">
           <span className="eyebrow">03 / CONHEÇA O FUNDADOR</span>
@@ -1078,34 +1351,40 @@ export default function Home() {
         </div>
         <div className="about-grid">
           <div
-            className="about-identity reveal spotlight-card"
+            className="about-identity bezel-shell reveal spotlight-card"
             onPointerMove={handleSpotlightMove}
             onPointerLeave={handleSpotlightLeave}
           >
-            <div className="identity-art">
-              <div className="portrait-Coord" aria-hidden="true">
-                <span>MATHIX LABS // 2026</span>
-                <span>AI ENGINEER &amp; FOUNDER</span>
+            <div className="bezel-core identity-core">
+              <div className="identity-art">
+                <div className="portrait-Coord" aria-hidden="true">
+                  <span>MATHIX LABS // 2026</span>
+                  <span>AI ENGINEER &amp; FOUNDER</span>
+                </div>
+                <div className="portrait-halo" aria-hidden="true" />
+                <div className="portrait-ring" aria-hidden="true" />
+                <i aria-hidden="true">◈</i>
+                <img
+                  className="portrait-photo"
+                  src="/lucas-paixao.png"
+                  alt="Foto de Lucas Mathias Paixão"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                />
+                <div className="portrait-fade" aria-hidden="true" />
               </div>
-              <div className="portrait-halo" aria-hidden="true" />
-              <div className="portrait-ring" aria-hidden="true" />
-              <i aria-hidden="true">◈</i>
-              <img
-                className="portrait-photo"
-                src="/lucas-paixao.png"
-                alt="Foto de Lucas Mathias Paixão"
-                loading="lazy"
-                width="400"
-                height="400"
-              />
-              <div className="portrait-fade" aria-hidden="true" />
-            </div>
-            <div className="identity-caption">
-              <span>LUCAS MATHIAS PAIXÃO</span>
-              <span>AI ENGINEER &amp; FOUNDER @ MATHIX LABS</span>
+              <div className="identity-caption">
+                <span>LUCAS MATHIAS PAIXÃO</span>
+                <span>AI ENGINEER &amp; FOUNDER @ MATHIX LABS</span>
+              </div>
             </div>
           </div>
+
           <div className="about-copy reveal">
+            <span className="founder-kicker">
+              <i>◈</i> LIDERANÇA TÉCNICA &amp; ARQUITETURA
+            </span>
             <h2>
               Por trás da tecnologia,
               <br />
@@ -1130,24 +1409,31 @@ export default function Home() {
             </p>
             <div className="about-links">
               <a
-                className="text-link"
+                className="button island-button"
                 href="/curriculo.pdf"
                 target="_blank"
                 rel="noreferrer"
               >
-                Baixar currículo completo <Arrow />
+                <span>Baixar currículo</span>
+                <span className="btn-island-icon">
+                  <Arrow />
+                </span>
               </a>
               <a
-                className="text-link"
+                className="button button-secondary island-button"
                 href={linkedIn}
                 target="_blank"
                 rel="noreferrer"
               >
-                Conectar no LinkedIn <Arrow />
+                <span>Conectar no LinkedIn</span>
+                <span className="btn-island-icon">
+                  <Arrow />
+                </span>
               </a>
             </div>
           </div>
         </div>
+
         <div className="skills-row reveal">
           <span className="eyebrow">
             STACK &amp; TECNOLOGIAS
@@ -1162,38 +1448,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* DOUBLE-BEZEL CTA ISLAND SECTION */}
       <section className="contact" id="contato">
-        <div className="contact-top reveal">
-          <span className="eyebrow">04 / VAMOS CONVERSAR</span>
-          <span className="availability">
-            <i />
-            Tem um projeto em mente? Vamos transformar em software
-          </span>
-        </div>
-        <div className="contact-main reveal">
-          <p>Conte seu desafio. Nós te ajudamos a transformar em realidade.</p>
-          <a href={linkedIn} target="_blank" rel="noreferrer">
-            <span>
-              Vamos construir sua
-              <br />
-              <em>próxima solução?</em>
-            </span>
-            <span
-              className="contact-arrow"
-              onPointerMove={handleMagneticMove}
-              onPointerLeave={handleMagneticLeave}
-            >
-              <Arrow />
-            </span>
-          </a>
-        </div>
-        <div className="contact-bottom">
-          <span>
-            Mathix Labs | Software, Sistemas &amp; Inteligência Artificial sob medida.
-          </span>
-          <a className="text-link" href={linkedIn} target="_blank" rel="noreferrer">
-            Iniciar uma conversa <Arrow />
-          </a>
+        <div className="contact-shell bezel-shell reveal">
+          <div className="contact-core bezel-core">
+            <div className="contact-top">
+              <span className="eyebrow">04 / VAMOS CONVERSAR</span>
+              <span className="availability">
+                <i />
+                Tem um projeto em mente? Vamos transformar em software
+              </span>
+            </div>
+            <div className="contact-main">
+              <p>Conte seu desafio. Nós te ajudamos a transformar em realidade.</p>
+              <a href={linkedIn} target="_blank" rel="noreferrer">
+                <span>
+                  Vamos construir sua
+                  <br />
+                  <em>próxima solução?</em>
+                </span>
+                <span
+                  className="contact-arrow"
+                  onPointerMove={handleMagneticMove}
+                  onPointerLeave={handleMagneticLeave}
+                >
+                  <Arrow />
+                </span>
+              </a>
+            </div>
+            <div className="contact-bottom">
+              <span>
+                Mathix Labs | Software, Sistemas &amp; Inteligência Artificial sob
+                medida.
+              </span>
+              <a className="text-link" href={linkedIn} target="_blank" rel="noreferrer">
+                Iniciar uma conversa <Arrow />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1205,7 +1497,9 @@ export default function Home() {
             <small>LABS</small>
           </span>
         </a>
-        <span>© 2026 MATHIX LABS · LUCAS MATHIAS PAIXÃO — ENGINEERING INTELLIGENCE.</span>
+        <span>
+          © 2026 MATHIX LABS · LUCAS MATHIAS PAIXÃO — ENGINEERING INTELLIGENCE.
+        </span>
         <div className="social-links">
           <a
             href="https://github.com/lucasPaixaoLMP"
